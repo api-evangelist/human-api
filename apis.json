@@ -1,0 +1,73 @@
+{
+    "name": "Human API",
+    "description": "<p>Get health data from everywhere. Connect and share real-time health data from medical records, labs, pharmacies, devices, apps, and patient portals.<\/p>",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/28171-www-humanapi-co.jpg",
+    "tags": [
+        "api provider",
+        "have api",
+        "healthcare"
+    ],
+    "created": "2019-12-19",
+    "modified": "2019-12-19",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/human-api\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "Human API",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/28171-www-humanapi-co.jpg",
+            "humanURL": "https:\/\/www.humanapi.co",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/human-api-openapi.json"
+                },
+                {
+                    "type": "x-postman-collecction",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/human-api-postman-collection.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "Crunchbase",
+            "url": "https:\/\/crunchbase.com\/organization\/humanapi"
+        },
+        {
+            "type": "Email",
+            "url": "contact@humanapi.co"
+        },
+        {
+            "type": "Email",
+            "url": "support@humanapi.co"
+        },
+        {
+            "type": "Email",
+            "url": "help@humanapi.co"
+        },
+        {
+            "type": "Email",
+            "url": "admin@humanapi.co"
+        },
+        {
+            "type": "Email",
+            "url": "security@humanapi.co"
+        },
+        {
+            "type": "Email",
+            "url": "privacy@humanapi.co"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/Human_API"
+        },
+        {
+            "type": "Website",
+            "url": "https:\/\/www.humanapi.co"
+        }
+    ]
+}
