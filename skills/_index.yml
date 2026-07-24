@@ -1,0 +1,12 @@
+generated: '2026-07-24'
+method: generated
+source: openapi/*.json + reference.humanapi.co (grounded on real operationIds)
+skills:
+- file: human-api-order-ehr-and-fetch-reports.md
+  name: Order an EHR retrieval and fetch the clinical report
+  api: openapi/human-api-admin-order-types-openapi.json
+  operations: [getOrderTypes, getUsersList, getUserReports]
+- file: human-api-connect-user-and-read-health-data.md
+  name: Connect a user and read their normalized health data
+  api: openapi/human-api-auth-connect-token-openapi.json
+  operations: [getUsersList]

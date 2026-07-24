@@ -98,6 +98,10 @@ apis:
   - type: APIReference
     url: https://reference.humanapi.co/v2.1/docs/overview
 common:
+- type: DomainSecurity
+  url: security/human-api-domain-security.yml
+- type: Authentication
+  url: authentication/human-api-authentication.yml
 - type: Website
   url: https://humanapi.co/
 - type: DeveloperPortal
@@ -118,6 +122,46 @@ common:
   url: https://www.humanapi.co/developer-terms
 - type: PrivacyPolicy
   url: https://humanapi.co/privacy-policy
+- type: Packages
+  url: packages/human-api-packages.yml
+- type: SDKs
+  url: packages/human-api-packages.yml
+- type: CLI
+  url: cli/human-api-cli.yml
+- type: Components
+  url: components/human-api-components.yml
+- type: LLMsTxt
+  url: llms/human-api-llms.txt
+- type: MCPServer
+  url: mcp/human-api-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/human-api-tool-crosswalk.yml
+- type: Conventions
+  url: conventions/human-api-conventions.yml
+- type: ErrorCatalog
+  url: errors/human-api-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/human-api-lifecycle.yml
+- type: DataModel
+  url: data-model/human-api-data-model.yml
+- type: Conformance
+  url: conformance/human-api-conformance.yml
+- type: AsyncAPI
+  url: asyncapi/human-api-notifications-asyncapi.yml
+- type: Webhooks
+  url: asyncapi/human-api-notifications-asyncapi.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Overlay
+  url: overlays/human-api-admin-order-types-overlay.yaml
+- type: Overlay
+  url: overlays/human-api-admin-user-reports-overlay.yaml
+- type: Overlay
+  url: overlays/human-api-admin-users-list-overlay.yaml
+- type: Overlay
+  url: overlays/human-api-auth-admin-token-overlay.yaml
+- type: Overlay
+  url: overlays/human-api-auth-connect-token-overlay.yaml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

@@ -1,0 +1,86 @@
+generated: '2026-07-24'
+method: searched
+source: https://reference.humanapi.co/docs/order-summary-notification + https://reference.humanapi.co/docs/aps-status-notes
+spec_type: AsyncAPI
+asyncapi: 2.6.0
+info:
+  title: Human API HIP Notifications
+  version: v3.0-HIP
+  description: >-
+    Webhook notifications the Health Intelligence Platform pushes to a configured client
+    endpoint. Notifications are delivered as JSON arrays of event objects. Enablement is
+    per-client and arranged with an account manager. Two event types are publicly documented.
+defaultContentType: application/json
+channels:
+  order/summary:
+    subscribe:
+      summary: Order Summary notification (order reached a terminal state).
+      operationId: onOrderSummaryUpdated
+      message:
+        $ref: '#/components/messages/OrderSummaryUpdated'
+  aps/status-notes:
+    subscribe:
+      summary: APS status / vendor progress note became available.
+      operationId: onVendorNoteCreated
+      message:
+        $ref: '#/components/messages/VendorNoteCreated'
+components:
+  messages:
+    OrderSummaryUpdated:
+      name: OrderSummaryUpdated
+      title: Order Summary Updated
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          timestamp: { type: string, format: date-time }
+          eventId: { type: string, format: uuid }
+          orderId: { type: string, format: uuid }
+          eventType: { type: string, enum: ['orders.OrderSummaryUpdated'] }
+          eventGroup: { type: string, example: order }
+          humanId: { type: string }
+          clientId: { type: string }
+          userId: { type: string }
+          clientUserId: { type: string }
+          clientData: { type: object }
+          eventPayload:
+            type: object
+            properties:
+              orderStatus: { type: string, example: completed }
+              timedOut: { type: boolean }
+              reportsAvailable: { type: boolean }
+              dataAvailable: { type: boolean }
+              fcraSuppressed: { type: boolean }
+              reports:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id: { type: string }
+                    name: { type: string }
+                    fileExtension: { type: string }
+                    uri: { type: string, format: uri }
+    VendorNoteCreated:
+      name: VendorNoteCreated
+      title: APS Vendor Note Created
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          timestamp: { type: string, format: date-time }
+          eventId: { type: string, format: uuid }
+          orderId: { type: string, format: uuid }
+          eventType: { type: string, enum: ['integrations.VendorNoteCreated'] }
+          eventGroup: { type: string, enum: [portal, ehr, offline] }
+          humanId: { type: string }
+          clientId: { type: string }
+          userId: { type: string }
+          clientUserId: { type: string }
+          clientData: { type: object }
+          eventPayload:
+            type: object
+            properties:
+              note: { type: string }
+              providerNames: { type: array, items: { type: string } }
+              providerIds: { type: array, items: { type: string } }
+              clientProviderId: { type: string }

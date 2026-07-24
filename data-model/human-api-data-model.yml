@@ -1,0 +1,54 @@
+generated: '2026-07-24'
+method: derived
+source: openapi/*.json + https://reference.humanapi.co/v3.0-HIP/llms.txt (API reference surface)
+note: >-
+  Entity-relationship graph for the Health Intelligence Platform (HIP) Admin API, derived
+  from the harvested OpenAPI schemas and the documented endpoint surface. Identifiers:
+  humanId (Human API user id), orderId (uuid), reportId (uuid), subscriptionId.
+entities:
+- name: User
+  id: humanId
+  also: clientUserId
+  fields: [firstName, lastName, dateOfBirth, humanId, clientUserEmail, status, suggestedSources, inviteLink, createdAt, updatedAt]
+  operations: [getUsersList, createUser, getUserDetails, performActionForUser]
+- name: Provider
+  belongs_to: User
+  operations: [userProviders]
+- name: OrderType
+  operations: [getOrderTypes]
+- name: Order
+  id: orderId
+  note: An EHR retrieval request; transitions through the fulfillment lifecycle.
+- name: Subscription
+  id: subscriptionId
+  operations: [getUsersSubscriptions, createSubscription, getSubscriptionDetails, deleteSubscription]
+- name: Report
+  id: reportId
+  also: createdByOrderId
+  fields: [individualReportGroup, combinedReportGroup, individualReportInfo, combinedReportInfo]
+  operations: [getUserReports, getReportById]
+- name: Resource
+  operations: [getTasksListLink]
+relationships:
+- from: Order
+  to: User
+  kind: belongs_to
+  via: humanId
+- from: Report
+  to: Order
+  kind: belongs_to
+  via: createdByOrderId
+- from: Report
+  to: User
+  kind: belongs_to
+  via: humanId
+- from: User
+  to: Provider
+  kind: has_many
+- from: User
+  to: Report
+  kind: has_many
+- from: Subscription
+  to: User
+  kind: belongs_to
+  via: humanId

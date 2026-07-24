@@ -1,0 +1,16 @@
+generated: '2026-07-24'
+method: derived
+source: openapi/human-api-admin-order-types-openapi.json, openapi/human-api-admin-user-reports-openapi.json,
+  openapi/human-api-admin-users-list-openapi.json
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  sources:
+  - openapi/human-api-admin-order-types-openapi.json
+  - openapi/human-api-admin-user-reports-openapi.json
+  - openapi/human-api-admin-users-list-openapi.json

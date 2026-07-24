@@ -1,0 +1,32 @@
+generated: '2026-07-24'
+method: derived
+source: openapi/*.json (4xx/5xx responses) + shared `error` schema
+format: proprietary-json
+note: >-
+  Human API does not use RFC 9457 problem+json. Errors are returned as a JSON object with
+  the shape below (from the shared `error` schema in the Admin API specs). The
+  x-humanapi-request-id field echoes the request id for support correlation.
+envelope:
+  media_type: application/json
+  fields:
+  - name: code
+    description: Machine-readable error code.
+  - name: error
+    description: Short error label.
+  - name: message
+    description: Human-readable error detail.
+  - name: x-humanapi-request-id
+    description: Request identifier for support/tracing correlation.
+problems:
+- status: 401
+  title: Unauthorized
+  description: Missing, invalid, or expired Bearer token.
+  source_operation: openapi/human-api-admin-users-list-openapi.json#getUsersList
+- status: 404
+  title: Not Found
+  description: The requested user, report, or resource does not exist.
+  source_operation: openapi/human-api-admin-user-reports-openapi.json#getUserReports
+- status: 500
+  title: Internal Server Error
+  description: Unexpected server-side error.
+  source_operation: openapi/human-api-admin-order-types-openapi.json#getOrderTypes

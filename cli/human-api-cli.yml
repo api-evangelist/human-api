@@ -1,0 +1,17 @@
+generated: '2026-07-24'
+method: searched
+source: https://pypi.org/project/humanapi/ + https://github.com/humanapi/humanapi-python-client
+note: >-
+  The official Python client (PyPI `humanapi`, by ola@humanapi.co) is published as "A CLI
+  client and Python API library for the HumanAPI health data platform." It installs a
+  `humanapi` command-line entry point alongside the library. The published command surface is
+  not richly documented in the registry metadata; the binary is catalogued in packages/.
+name: humanapi
+install:
+- method: pip
+  command: pip install humanapi
+binary: humanapi
+source_package: packages/human-api-packages.yml#humanapi (pypi)
+commands:
+  documented: false
+  note: Subcommand list is not published in the PyPI metadata; refer to the source repo README.

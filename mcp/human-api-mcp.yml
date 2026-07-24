@@ -1,0 +1,23 @@
+generated: '2026-07-24'
+method: derived
+status: candidate
+source: openapi/*.json
+note: >-
+  No official Human API MCP server was found. (The `humanapi-mcp` npm package belongs to an
+  unrelated company, humanapi.ru — a "hire humans" service — not this health-data platform.)
+  The tool list below is a CANDIDATE derived one-to-one from the harvested Admin API
+  operations; each tool inherits its backing operation's parameters as its input contract.
+server:
+  name: human-api
+  transport: http
+  url: null
+tools:
+- name: get_order_types
+  description: Get available EHR order types for the client application.
+  source_operation: openapi/human-api-admin-order-types-openapi.json#getOrderTypes
+- name: list_users
+  description: List all active Human API users (supports offset pagination; filter by humanId or clientUserId).
+  source_operation: openapi/human-api-admin-users-list-openapi.json#getUsersList
+- name: get_user_reports
+  description: Fetch a user's available clinical summary reports (optionally by createdByOrderId).
+  source_operation: openapi/human-api-admin-user-reports-openapi.json#getUserReports

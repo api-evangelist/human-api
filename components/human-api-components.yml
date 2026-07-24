@@ -1,0 +1,18 @@
+generated: '2026-07-24'
+method: searched
+source: https://github.com/humanapi/connect-client + https://www.npmjs.com/package/humanapi-connect-client
+note: >-
+  Human Connect is Human API's embeddable, client-side connection surface: an end user
+  authenticates their health data sources (providers, labs, pharmacies, wearables, apps)
+  through a hosted widget spawned inside the customer's application, yielding a user
+  accessToken for the Data API. This is a client-side UI component, distinct from the
+  server-side SDKs in packages/.
+families:
+- name: Human Connect
+  kind: hosted-connect-widget
+  description: Spawn the Human Connect single-sign-on / data-source connection flow inside your app.
+  loaders:
+  - language: javascript
+    package: humanapi-connect-client
+    url: https://www.npmjs.com/package/humanapi-connect-client
+    source: https://github.com/humanapi/connect-client

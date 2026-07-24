@@ -1,0 +1,41 @@
+generated: '2026-07-24'
+method: derived
+source: openapi/*.json + reference.humanapi.co docs
+note: >-
+  Cross-cutting request/response semantics for the Human API Health Intelligence Platform
+  (HIP) Admin API and the legacy v2.1 Data API. Derived from the harvested OpenAPI plus the
+  public ReadMe reference.
+authentication:
+  style: bearer
+  detail: >-
+    HTTP Bearer JWT (bearerAuth). Admin API tokens are minted via POST
+    https://auth.humanapi.co/v1/admin/token (client_id + client_secret). Consumer Data API
+    calls use the end user's accessToken as a Bearer credential (minted via /v1/connect/token).
+  ref: authentication/human-api-authentication.yml
+idempotency:
+  supported: false
+  note: No Idempotency-Key header or idempotent-retry contract is documented.
+pagination:
+  style: offset
+  params:
+  - offset
+  note: The Admin API users list (GET /api/v1/users) accepts an `offset` parameter.
+request_tracing:
+  field: x-humanapi-request-id
+  location: error body
+  note: Error responses echo x-humanapi-request-id for support correlation.
+versioning:
+  style: uri-path + docs-version
+  detail: >-
+    Admin/HIP API paths are prefixed /api/v1; the auth endpoints /v1/*. The reference site is
+    versioned (v3.0-HIP current; v2.1 legacy Data API). No version header is required.
+error_envelope:
+  media_type: application/json
+  shape: "{ code, error, message, x-humanapi-request-id }"
+  ref: errors/human-api-problem-types.yml
+events:
+  style: webhook-notifications
+  note: Order Summary and APS Status Notes notifications are pushed as JSON arrays; see asyncapi/.
+  ref: asyncapi/human-api-notifications-asyncapi.yml
+rate_limiting:
+  documented: false

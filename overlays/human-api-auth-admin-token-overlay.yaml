@@ -1,0 +1,16 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Human API — HAPI Auth Public (auth-admin-token)
+  version: 1.0.0
+extends: openapi/human-api-auth-admin-token-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: human-api
+    x-apievangelist-rating-review: review.yml
+    x-apievangelist-agent-readiness: derived
+- target: $.info
+  update:
+    x-apievangelist-conventions: conventions/human-api-conventions.yml
+    x-apievangelist-errors: errors/human-api-problem-types.yml
+    x-apievangelist-authentication: authentication/human-api-authentication.yml

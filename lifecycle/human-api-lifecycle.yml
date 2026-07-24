@@ -1,0 +1,29 @@
+generated: '2026-07-24'
+method: searched
+source: reference.humanapi.co (order-fulfillment-lifecycle, overview) + status.humanapi.co
+versioning:
+  scheme: uri-path + docs-version
+  current: v3.0-HIP
+  legacy: v2.1 (consumer Data API)
+  docs: https://reference.humanapi.co/docs/overview
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    The v2.1 consumer Data API is documented as legacy but no formal deprecation policy or
+    RFC 8594 Sunset/Deprecation header support is published.
+status_page: https://status.humanapi.co/
+sla:
+  url: null
+  uptime_target: null
+order_lifecycle:
+  note: >-
+    An Order (EHR retrieval) transitions through a documented fulfillment lifecycle; terminal
+    states are reported via Order Summary notifications.
+  states:
+  - Created
+  - In Progress
+  - Pended
+  - Completed
+  - Cancelled
+deprecated_operations: []
