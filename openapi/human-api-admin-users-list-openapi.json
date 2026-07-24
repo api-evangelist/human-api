@@ -1,0 +1,231 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "description": "You can use Admin API to create and manage your Human API users",
+    "version": "1.0.0",
+    "title": "Admin API",
+    "termsOfService": "https://www.humanapi.co/developer-terms",
+    "contact": {
+      "email": "help@humanapi.co",
+      "url": "https://www.humanapi.co/contact"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://admin.humanapi.co",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "users",
+      "description": "API endpoints to manage users",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://reference.humanapi.co/docs/admin-api"
+      }
+    }
+  ],
+  "paths": {
+    "/api/v1/users": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "description": "Get the list of all active users",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/humanIdQueryOptional"
+          },
+          {
+            "$ref": "#/components/parameters/clientUserIdQueryOptional"
+          }
+        ],
+        "operationId": "getUsersList",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "user": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "humanId",
+          "clientUserEmail",
+          "createdAt",
+          "updatedAt",
+          "status"
+        ],
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date-time",
+            "example": "1968-02-13T00:00:00.000Z"
+          },
+          "humanId": {
+            "type": "string"
+          },
+          "clientUserEmail": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string"
+          },
+          "suggestedSources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "inviteLink": {
+            "type": "string"
+          }
+        }
+      },
+      "error": {
+        "type": "object",
+        "required": [
+          "statusCode",
+          "error",
+          "message",
+          "x-humanapi-request-id"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "x-humanapi-request-id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "humanIdQueryOptional": {
+        "name": "humanId",
+        "in": "query",
+        "description": "The humanId of the user",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "offset": {
+        "name": "offset",
+        "in": "query",
+        "description": "The index of the first record to return",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "default": 0
+        }
+      },
+      "clientUserIdQueryOptional": {
+        "name": "clientUserId",
+        "in": "query",
+        "description": "The clientUserId that the subscription is listening to",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "unauthorized": {
+        "description": "The token provided is invalid. It may have expired or may have been revoked.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            },
+            "example": {
+              "code": 401,
+              "error": "Unauthorized",
+              "message": "Cannot authenticate you with this token",
+              "x-humanapi-request-id": "05518ca2-1c9a-434e-8512-7284bbc54137"
+            }
+          }
+        }
+      },
+      "notFound": {
+        "description": "The specified resource was not found (e.g. the id does not exist)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            },
+            "example": {
+              "code": 404,
+              "error": "Not Found",
+              "message": "Not Found",
+              "x-humanapi-request-id": "05518ca2-1c9a-434e-8512-7284bbc54137"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}

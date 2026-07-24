@@ -1,0 +1,147 @@
+aid: human-api
+name: Human API
+review:
+  question: What is Human API's real public developer surface — is it FHIR/SMART-on-FHIR, and is it self-serve or gated?
+  answer: >-
+    Human API (part of LexisNexis Risk Solutions) exposes a documented but partner-gated
+    proprietary REST/JSON API, not a HL7 FHIR or SMART-on-FHIR API. The developer portal is
+    live at https://developer.humanapi.co/ (login/trial-request), and full public API
+    reference is served at https://reference.humanapi.co/. No FHIR CapabilityStatement or
+    SMART .well-known configuration is served.
+  date: '2026-07-24'
+  reviewer: API Evangelist
+  homeMarket: United States
+findings:
+  summary: |
+    Human API is a US consumer-mediated and enterprise health-data platform, founded 2013,
+    now part of LexisNexis Risk Solutions. humanapi.co 301-redirects to
+    risk.lexisnexis.com/products/health-intelligence-ehr. The public developer surface is a
+    proprietary REST/JSON API across three product families, documented on a ReadMe-hosted
+    reference site. It is NOT HL7 FHIR: no FHIR CapabilityStatement (/metadata) and no
+    SMART-on-FHIR .well-known/smart-configuration are served (both 404). Auth is OAuth2-style
+    token exchange (client credentials + connect tokens) yielding Bearer JWTs. API access is
+    gated behind a developer-portal login and partner/trial agreement, though the reference
+    docs and per-endpoint OpenAPI are public.
+  homeMarket: United States
+  developerPortal:
+    url: https://developer.humanapi.co/
+    httpStatus: 200
+    note: Live login page; registration links to a trial request at humanapi.co. Gated.
+  apiReference:
+    url: https://reference.humanapi.co/
+    httpStatus: 200
+    note: ReadMe-hosted. v3.0-HIP (Health Intelligence Platform) reference plus legacy v2.1 Data API docs.
+  fhir:
+    capabilityStatement: false
+    smartConfiguration: false
+    probes:
+      - url: https://api.humanapi.co/.well-known/smart-configuration
+        httpStatus: 404
+      - url: https://api.humanapi.co/.well-known/openid-configuration
+        httpStatus: 404
+      - url: https://fhir.humanapi.co/
+        httpStatus: 000
+    note: >-
+      No FHIR resources, CapabilityStatement, or SMART-on-FHIR authorization surface. Human
+      API is a proprietary normalized-health-data API predating and independent of FHIR.
+  standardsConformance:
+    usCore: false
+    daVinci: false
+    carinBlueButton: false
+    note: >-
+      No US Core / Da Vinci / CARIN Blue Button implementation-guide conformance is claimed;
+      the API is a proprietary REST model, not a FHIR implementation guide.
+  authModel:
+    type: OAuth2-style token exchange + Bearer JWT
+    smartOnFhir: false
+    scopes:
+      - client_credentials (Admin API): POST https://auth.humanapi.co/v1/admin/token with client_id + client_secret + type
+      - connect token: POST https://auth.humanapi.co/v1/connect/token with client_id + client_user_id + type, optional client_secret, client_user_email, and extra_scopes[]
+      - Admin API operations secured by bearerAuth (HTTP bearer, JWT)
+      - Data API (v2.1) queries use the user's accessToken as a Bearer credential
+    note: Proprietary OAuth2-flavored scheme, not SMART-on-FHIR patient/*.read scopes.
+  gating: gated (partner/trial agreement; portal login) with public reference docs
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://admin.humanapi.co
+      documented: true
+      note: Health Intelligence Platform (HIP) Admin API — orders, users, subscriptions, reports, resources.
+    - protocol: REST
+      scheme: https
+      baseURL: https://auth.humanapi.co
+      documented: true
+      note: HAPI Auth Public — token exchange endpoints.
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.humanapi.co/v1/human
+      documented: true
+      note: Legacy consumer Data API (v2.1). Root redirects (302) to /v1/human; unauthenticated requests return 401.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket surface is documented.
+  specsHarvested:
+    count: 5
+    format: OpenAPI 3.0.3 (per-endpoint, ReadMe-generated), saved verbatim
+    provenance:
+      - file: openapi/human-api-auth-admin-token-openapi.json
+        source: https://reference.humanapi.co/reference/post_v1-admin-token.md
+        title: HAPI Auth Public
+        server: https://auth.humanapi.co
+        path: POST /v1/admin/token
+      - file: openapi/human-api-auth-connect-token-openapi.json
+        source: https://reference.humanapi.co/reference/post_v1-connect-token.md
+        title: HAPI Auth Public
+        server: https://auth.humanapi.co
+        path: POST /v1/connect/token
+      - file: openapi/human-api-admin-order-types-openapi.json
+        source: https://reference.humanapi.co/reference/getordertypes.md
+        title: Admin API
+        server: https://admin.humanapi.co
+        path: GET /api/v1/order-types
+      - file: openapi/human-api-admin-users-list-openapi.json
+        source: https://reference.humanapi.co/reference/getuserslist.md
+        title: Admin API
+        server: https://admin.humanapi.co
+        path: /api/v1/users
+      - file: openapi/human-api-admin-user-reports-openapi.json
+        source: https://reference.humanapi.co/reference/getuserreports.md
+        title: Admin API
+        server: https://admin.humanapi.co
+        path: GET /api/v1/user/reports
+    note: >-
+      The ReadMe reference exposes a self-contained OpenAPI 3.0.3 block per endpoint. Five
+      representative operations were harvested verbatim (both auth token endpoints plus three
+      Admin API operations). No single aggregate OpenAPI/swagger download is published
+      (/openapi.json, /swagger.json returned 404).
+sources:
+  - url: https://humanapi.co/
+    type: Website
+    httpStatus: 301
+    note: Redirects to risk.lexisnexis.com/products/health-intelligence-ehr (LexisNexis Risk Solutions).
+  - url: https://developer.humanapi.co/
+    type: DeveloperPortal
+    httpStatus: 200
+  - url: https://reference.humanapi.co/docs/overview
+    type: Documentation
+    httpStatus: 200
+    note: Health Intelligence Platform (HIP) overview.
+  - url: https://reference.humanapi.co/v2.1/docs/data-overview
+    type: Documentation
+    httpStatus: 200
+    note: Legacy consumer Data API overview; base URL https://api.humanapi.co/v1/human, Bearer accessToken.
+  - url: https://reference.humanapi.co/v3.0-HIP/llms.txt
+    type: LLMsTxt
+    httpStatus: 200
+    note: Enumerates the full HIP API reference (order-types, users, subscriptions, reports, resources, auth tokens).
+  - url: https://status.humanapi.co/
+    type: StatusPage
+    httpStatus: 200
+  - url: https://github.com/humanapi
+    type: GitHubOrganization
+    httpStatus: 200
+    note: Official org — client libraries and example apps (Node, Python, Ruby, Java, iOS, Android, Connect JS).
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
