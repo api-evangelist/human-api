@@ -1,0 +1,19 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Human API — Admin API (admin-user-details)
+  version: 1.0.0
+extends: openapi/human-api-admin-user-details-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: human-api
+    x-apievangelist-rating-review: review.yml
+    x-apievangelist-agent-readiness: derived
+- target: $.info
+  update:
+    x-apievangelist-conventions: conventions/human-api-conventions.yml
+    x-apievangelist-errors: errors/human-api-problem-types.yml
+    x-apievangelist-authentication: authentication/human-api-authentication.yml
+    x-apievangelist-data-model: data-model/human-api-data-model.yml
+    x-apievangelist-rate-limits: rate-limits/human-api-rate-limits.yml
+    x-apievangelist-plans: plans/human-api-plans-pricing.yml

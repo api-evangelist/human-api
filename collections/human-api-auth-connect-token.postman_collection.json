@@ -1,0 +1,117 @@
+{
+  "item": [
+    {
+      "id": "a381cc7c-57f1-4e2e-8417-32b604ec5022",
+      "name": "connect",
+      "description": {
+        "content": "API endpoints to generate tokens for Connect App",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9d859fc5-3bb7-4479-9611-35e36ef2b80b",
+          "name": "Public method for connect to generate tokens",
+          "request": {
+            "name": "Public method for connect to generate tokens",
+            "description": {
+              "content": "Public method for connect to generate tokens",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "connect",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_user_id\": \"<string>\",\n  \"type\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"client_user_email\": \"<string>\",\n  \"extra_scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "29a80145-71f2-4b35-b28d-68eee088aab2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connect",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_user_id\": \"<string>\",\n  \"type\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"client_user_email\": \"<string>\",\n  \"extra_scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://auth.humanapi.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "660e4a2f-34e3-415d-a013-d0bf1793751b",
+    "name": "HAPI Auth Public",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public authentication endpoints for facilitating token exchange with external authentication systems.\n\nContact Support:\n Email: help@humanapi.co",
+      "type": "text/plain"
+    }
+  }
+}

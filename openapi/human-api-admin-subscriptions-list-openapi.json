@@ -1,0 +1,262 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "description": "You can use Admin API to create and manage your Human API users",
+    "version": "1.0.0",
+    "title": "Admin API",
+    "termsOfService": "https://www.humanapi.co/developer-terms",
+    "contact": {
+      "email": "help@humanapi.co",
+      "url": "https://www.humanapi.co/contact"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://admin.humanapi.co",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "subscriptions",
+      "description": "API endpoints to manage subscriptions",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://reference.humanapi.co/docs/admin-api"
+      }
+    }
+  ],
+  "paths": {
+    "/api/v1/subscriptions": {
+      "get": {
+        "tags": [
+          "subscriptions"
+        ],
+        "description": "Find a subscription",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientUserId"
+          },
+          {
+            "$ref": "#/components/parameters/subscriberEmail"
+          },
+          {
+            "$ref": "#/components/parameters/role"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/query"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          }
+        ],
+        "operationId": "getUsersSubscriptions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/subscription"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "subscription": {
+        "type": "object",
+        "required": [
+          "clientUserId",
+          "subscriberEmail",
+          "role"
+        ],
+        "properties": {
+          "clientUserId": {
+            "type": "string"
+          },
+          "subscriberEmail": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "subscriberOffice": {
+            "type": "string"
+          },
+          "subscriberFirstName": {
+            "type": "string"
+          },
+          "subscriberLastName": {
+            "type": "string"
+          }
+        }
+      },
+      "error": {
+        "type": "object",
+        "required": [
+          "statusCode",
+          "error",
+          "message",
+          "x-humanapi-request-id"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "x-humanapi-request-id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "description": "The max number of records to return in one query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "default": 50
+        }
+      },
+      "offset": {
+        "name": "offset",
+        "in": "query",
+        "description": "The index of the first record to return",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "default": 0
+        }
+      },
+      "subscriberEmail": {
+        "name": "subscriberEmail",
+        "in": "query",
+        "description": "The email that the subscription is bound to",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "role": {
+        "name": "role",
+        "in": "query",
+        "description": "The role that the subscription is bound to.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "producer"
+          ]
+        }
+      },
+      "clientUserId": {
+        "name": "clientUserId",
+        "in": "query",
+        "description": "The clientUserId of user.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "query": {
+        "name": "query",
+        "in": "query",
+        "description": "The search string for pagination",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "sort": {
+        "name": "sort",
+        "in": "query",
+        "description": "The sort option for pagination",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "unauthorized": {
+        "description": "The token provided is invalid. It may have expired or may have been revoked.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            },
+            "example": {
+              "code": 401,
+              "error": "Unauthorized",
+              "message": "Cannot authenticate you with this token",
+              "x-humanapi-request-id": "05518ca2-1c9a-434e-8512-7284bbc54137"
+            }
+          }
+        }
+      },
+      "notFound": {
+        "description": "The specified resource was not found (e.g. the id does not exist)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            },
+            "example": {
+              "code": 404,
+              "error": "Not Found",
+              "message": "Not Found",
+              "x-humanapi-request-id": "05518ca2-1c9a-434e-8512-7284bbc54137"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}

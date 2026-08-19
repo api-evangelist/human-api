@@ -1,41 +1,88 @@
-generated: '2026-07-24'
-method: derived
-source: openapi/*.json + reference.humanapi.co docs
+generated: '2026-08-15'
+method: searched
+source: openapi/*.json (15 specs) + the full reference.humanapi.co markdown corpus (33 pages)
 note: >-
   Cross-cutting request/response semantics for the Human API Health Intelligence Platform
-  (HIP) Admin API and the legacy v2.1 Data API. Derived from the harvested OpenAPI plus the
-  public ReadMe reference.
+  (HIP) Admin API, the HAPI Auth Public API and the legacy v2.1 Data API. Derived from the
+  harvested OpenAPI plus the complete public ReadMe reference, re-checked 2026-08-15.
 authentication:
   style: bearer
   detail: >-
-    HTTP Bearer JWT (bearerAuth). Admin API tokens are minted via POST
-    https://auth.humanapi.co/v1/admin/token (client_id + client_secret). Consumer Data API
-    calls use the end user's accessToken as a Bearer credential (minted via /v1/connect/token).
+    HTTP Bearer JWT (bearerAuth) on all 13 Admin API operations. Admin tokens are minted via
+    POST https://auth.humanapi.co/v1/admin/token (client_id + client_secret). Consumer Data
+    API calls use the end user's accessToken as a Bearer credential, minted via POST
+    https://auth.humanapi.co/v1/connect/token (client_id + client_user_id, optional
+    client_secret / client_user_email / extra_scopes).
+  scopes: false
+  scopes_note: >-
+    The connect-token request accepts an `extra_scopes` field but no scope vocabulary is
+    published and no oauth2 securityScheme is declared, so scopes/ is deliberately not emitted.
   ref: authentication/human-api-authentication.yml
 idempotency:
   supported: false
-  note: No Idempotency-Key header or idempotent-retry contract is documented.
+  header: null
+  note: >-
+    No Idempotency-Key header and no idempotent-retry contract is documented anywhere in the
+    spec set or the docs corpus. This matters here more than usual: createUser both creates a
+    user AND submits a billable EHR order, and its only collision defence is a 409 Conflict
+    ("Unable to match the login of the new user to an existing user"). A retried create after a
+    network timeout has no safe replay semantics. No `Idempotency` pointer is asserted.
 pagination:
   style: offset
-  params:
-  - offset
-  note: The Admin API users list (GET /api/v1/users) accepts an `offset` parameter.
+  params: [offset]
+  response_fields: []
+  note: >-
+    GET /api/v1/users accepts an `offset` parameter. No limit/page-size parameter, no cursor,
+    no total-count or next-link response field is declared - a client cannot tell how many
+    records remain or what page size it received.
+filtering:
+  params: [humanId, clientUserId, createdByOrderId, subscriptionId]
+  note: List operations filter by identity rather than by query language.
+field_expansion:
+  supported: false
+metadata:
+  field: clientData
+  note: >-
+    Orders and notifications carry a free-form `clientData` object that is echoed back on
+    Order Summary events - the provider's pass-through correlation mechanism.
 request_tracing:
   field: x-humanapi-request-id
   location: error body
-  note: Error responses echo x-humanapi-request-id for support correlation.
+  format: uuid
+  note: >-
+    Error responses echo x-humanapi-request-id for support correlation. It appears in the body
+    only; no request-id response header is documented for successful calls.
 versioning:
   style: uri-path + docs-version
   detail: >-
     Admin/HIP API paths are prefixed /api/v1; the auth endpoints /v1/*. The reference site is
     versioned (v3.0-HIP current; v2.1 legacy Data API). No version header is required.
+  ref: lifecycle/human-api-lifecycle.yml
 error_envelope:
   media_type: application/json
-  shape: "{ code, error, message, x-humanapi-request-id }"
+  shape: '{ code, error, message, x-humanapi-request-id }'
+  alternate_shape: '{ statusCode, error, message, validation: { source, keys[] }, x-humanapi-request-id }'
+  note: Two distinct error envelopes are in use; see errors/ for which operations return which.
   ref: errors/human-api-problem-types.yml
 events:
   style: webhook-notifications
-  note: Order Summary and APS Status Notes notifications are pushed as JSON arrays; see asyncapi/.
+  subscription_model: api
+  note: >-
+    Order Summary and APS Status Notes notifications are pushed as JSON ARRAYS of event
+    objects to a client endpoint configured with an Account Manager. Separately,
+    /api/v1/subscriptions subscribes named human recipients (field agents, case managers) to
+    case notifications - a people subscription, not a machine webhook registration. There is
+    no self-service webhook endpoint registration API.
   ref: asyncapi/human-api-notifications-asyncapi.yml
+report_delivery:
+  mechanisms: [HTTP Multipart, sFTP, pre-signed URL]
+  note: >-
+    Completed reports can be pushed out-of-band rather than pulled from
+    /api/v1/user/reports/{reportId}. Delivery targets are configured with a Customer Service
+    representative, not through the API.
+  docs: https://reference.humanapi.co/docs/reports-delivery
 rate_limiting:
   documented: false
+  headers: []
+  checked: '2026-08-15'
+  ref: rate-limits/human-api-rate-limits.yml

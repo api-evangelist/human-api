@@ -1,10 +1,13 @@
-generated: '2026-07-24'
+generated: '2026-08-15'
 method: derived
-source: openapi/*.json + https://reference.humanapi.co/v3.0-HIP/llms.txt (API reference surface)
+source: openapi/*.json (15 harvested specs, every documented operation) + https://reference.humanapi.co/llms.txt
 note: >-
   Entity-relationship graph for the Health Intelligence Platform (HIP) Admin API, derived
   from the harvested OpenAPI schemas and the documented endpoint surface. Identifiers:
-  humanId (Human API user id), orderId (uuid), reportId (uuid), subscriptionId.
+  humanId (Human API user id), orderId (uuid), reportId (uuid), subscriptionId. Regenerated
+  2026-08-15 against the full 15-operation spec set - the earlier round saw only 5 operations,
+  so the Subscription, Report-by-id, Provider and Resource edges were documented from the
+  reference index rather than from schemas. They are now backed by harvested OpenAPI.
 entities:
 - name: User
   id: humanId
@@ -28,7 +31,8 @@ entities:
   fields: [individualReportGroup, combinedReportGroup, individualReportInfo, combinedReportInfo]
   operations: [getUserReports, getReportById]
 - name: Resource
-  operations: [getTasksListLink]
+  operations: [getTasksLiistLink]
+  note: operationId is misspelled in the provider's own spec; preserved verbatim.
 relationships:
 - from: Order
   to: User
@@ -52,3 +56,17 @@ relationships:
   to: User
   kind: belongs_to
   via: humanId
+schemas_harvested:
+- { entity: user, spec: openapi/human-api-admin-users-list-openapi.json, schema: user }
+- { entity: user, spec: openapi/human-api-admin-user-create-openapi.json, schema: user }
+- { entity: subscription, spec: openapi/human-api-admin-subscription-create-openapi.json, schema: subscription }
+- { entity: error, spec: openapi/*.json, schema: error }
+- { entity: error, spec: openapi/human-api-admin-user-create-openapi.json, schema: errorInvalidInput }
+subscription_shape:
+  fields: [clientUserId, subscriberEmail, subscriberFirstName, subscriberLastName, subscriberOffice, role]
+  note: >-
+    A Subscription binds a NAMED HUMAN (an agent or case manager, by email and role) to a
+    case identified by clientUserId - it is a people-notification record, not a webhook
+    endpoint registration.
+render: null
+

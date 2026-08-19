@@ -1,0 +1,79 @@
+generated: '2026-08-15'
+method: probed
+source: direct HTTP probe of every apis.yml baseURL host, every OpenAPI servers[] host, and the docs/portal hosts
+note: >-
+  Every /.well-known/ path was probed on all Human API hosts and NO Human API host serves a
+  well-known document. status.humanapi.co DOES return a security.txt on HTTP 200, but that
+  document is Atlassian Statuspage's vendor-wide file (Contact:
+  https://www.atlassian.com/trust/security/report-a-vulnerability, signed by Atlassian) served
+  from the CNAMEd status host - it is NOT a Human API document and does not describe a Human
+  API disclosure program, so no SecurityTxt or WellKnown pointer is asserted in apis.yml.
+  reference.humanapi.co (the ReadMe docs host) rate-limited automated probes with HTTP 429 on
+  every /.well-known/ path; its /llms.txt did answer 200, and that document is captured in llms/.
+hosts:
+- host: https://admin.humanapi.co
+  documents:
+  - { path: /.well-known/security.txt, status: 404 }
+  - { path: /.well-known/openid-configuration, status: 404 }
+  - { path: /.well-known/oauth-authorization-server, status: 404 }
+  - { path: /.well-known/oauth-protected-resource, status: 404 }
+  - { path: /.well-known/api-catalog, status: 404 }
+  - { path: /.well-known/ai-plugin.json, status: 404 }
+  - { path: /.well-known/agent-card.json, status: 404 }
+  - { path: /.well-known/agent.json, status: 404 }
+- host: https://auth.humanapi.co
+  documents:
+  - { path: /.well-known/security.txt, status: 404 }
+  - { path: /.well-known/openid-configuration, status: 404 }
+  - { path: /.well-known/oauth-authorization-server, status: 404 }
+  - { path: /.well-known/oauth-protected-resource, status: 404 }
+  - { path: /.well-known/api-catalog, status: 404 }
+  - { path: /.well-known/ai-plugin.json, status: 404 }
+  - { path: /.well-known/agent-card.json, status: 404 }
+  - { path: /.well-known/agent.json, status: 404 }
+- host: https://api.humanapi.co
+  documents:
+  - { path: /.well-known/security.txt, status: 404 }
+  - { path: /.well-known/openid-configuration, status: 404 }
+  - { path: /.well-known/oauth-authorization-server, status: 404 }
+  - { path: /.well-known/oauth-protected-resource, status: 404 }
+  - { path: /.well-known/api-catalog, status: 404 }
+  - { path: /.well-known/ai-plugin.json, status: 404 }
+  - { path: /.well-known/agent-card.json, status: 404 }
+  - { path: /.well-known/agent.json, status: 404 }
+- host: https://humanapi.co
+  note: 301-redirects to https://risk.lexisnexis.com/products/health-intelligence-ehr
+  documents:
+  - { path: /.well-known/security.txt, status: 404 }
+  - { path: /.well-known/openid-configuration, status: 404 }
+  - { path: /.well-known/oauth-authorization-server, status: 404 }
+  - { path: /.well-known/api-catalog, status: 404 }
+  - { path: /.well-known/ai-plugin.json, status: 404 }
+  - { path: /.well-known/agent-card.json, status: 404 }
+  - { path: /.well-known/agent.json, status: 404 }
+- host: https://reference.humanapi.co
+  note: ReadMe-hosted docs; automated /.well-known/ probes were answered 429 (bot rate-limit), /llms.txt answered 200
+  documents:
+  - { path: /.well-known/security.txt, status: 404 }
+  - { path: /.well-known/openid-configuration, status: 404 }
+  - { path: /.well-known/agent-card.json, status: 404 }
+  - { path: /.well-known/agent.json, status: 404 }
+  - { path: /llms.txt, status: 200, file: ../llms/human-api-llms.txt }
+  - { path: /robots.txt, status: 429 }
+- host: https://developer.humanapi.co
+  documents:
+  - { path: /.well-known/security.txt, status: 404 }
+  - { path: /.well-known/openid-configuration, status: 404 }
+  - { path: /.well-known/agent-card.json, status: 404 }
+  - { path: /.well-known/agent.json, status: 404 }
+  - { path: /robots.txt, status: 200, note: "User-agent: * Disallow: / (portal is fully disallowed to crawlers)" }
+- host: https://status.humanapi.co
+  note: Atlassian Statuspage vendor host (CNAME); documents below belong to Atlassian, not Human API
+  documents:
+  - { path: /.well-known/security.txt, status: 200, owner: atlassian-statuspage, saved: false }
+summary:
+  human_api_owned_well_known_documents: 0
+  security_txt_first_party: false
+  agent_card: false
+  oauth_metadata: false
+  pointer_emitted: false

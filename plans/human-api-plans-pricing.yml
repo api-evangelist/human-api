@@ -1,0 +1,31 @@
+generated: '2026-08-15'
+method: searched
+source: https://risk.lexisnexis.com/products/health-intelligence-ehr
+note: >-
+  Human API publishes NO public pricing. humanapi.co/pricing returns 404, and humanapi.co
+  itself now 301-redirects to the LexisNexis Risk Solutions product page for Health
+  Intelligence EHR, which carries no rates, tiers, quotas or overage schedule - only
+  "Contact Us" / sales-contact forms. The developer portal (developer.humanapi.co) is a
+  login and its robots.txt disallows all crawling. Access to the Admin API is gated behind a
+  partner agreement negotiated with an Account Manager (the docs repeatedly instruct
+  customers to "work with your Account Manager" to configure Order Types, notification
+  delivery and report shipment), which is where commercial terms are set.
+model: enterprise-contract
+public_pricing: false
+plan_count: 0
+plans: []
+evidence:
+- url: https://www.humanapi.co/pricing
+  status: 404
+- url: https://risk.lexisnexis.com/products/health-intelligence-ehr
+  status: 200
+  note: product page; sales contact only, no rates published
+- url: https://developer.humanapi.co/robots.txt
+  status: 200
+  note: "User-agent: * Disallow: /"
+contact:
+- type: sales
+  url: https://risk.lexisnexis.com/contact-us#sales
+- type: support
+  url: https://risk.lexisnexis.com/contact-us#support
+checked: '2026-08-15'

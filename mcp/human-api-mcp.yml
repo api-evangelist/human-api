@@ -1,23 +1,74 @@
-generated: '2026-07-24'
+generated: '2026-08-15'
 method: derived
 status: candidate
-source: openapi/*.json
+source: openapi/*.json (15 harvested operations)
 note: >-
-  No official Human API MCP server was found. (The `humanapi-mcp` npm package belongs to an
-  unrelated company, humanapi.ru — a "hire humans" service — not this health-data platform.)
-  The tool list below is a CANDIDATE derived one-to-one from the harvested Admin API
-  operations; each tool inherits its backing operation's parameters as its input contract.
+  No official Human API MCP server exists. Searched the docs corpus, the github.com/humanapi
+  org, npm and the public MCP registries; the only near-hit, the `humanapi-mcp` npm package,
+  belongs to an unrelated company (humanapi.ru, a "hire humans" service) and is NOT this
+  health-data platform. The tool list below is a CANDIDATE derived one-to-one from the
+  harvested Admin and Auth API operations; each tool inherits its backing operation's
+  parameters and requestBody as its real input contract. Nothing here is served by Human API.
 server:
   name: human-api
   transport: http
   url: null
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: derived
+  tools: 15
+  checked: '2026-08-15'
+  note: >-
+    mode:none - Human API ships neither a remote MCP endpoint nor a local stdio package. The
+    Admin API is Bearer-JWT gated behind a partner agreement, so any future server would need
+    api-key/oauth credentials that are not self-service.
 tools:
 - name: get_order_types
   description: Get available EHR order types for the client application.
   source_operation: openapi/human-api-admin-order-types-openapi.json#getOrderTypes
 - name: list_users
-  description: List all active Human API users (supports offset pagination; filter by humanId or clientUserId).
+  description: List all active Human API users (offset pagination; filter by humanId or clientUserId).
   source_operation: openapi/human-api-admin-users-list-openapi.json#getUsersList
+- name: create_user
+  description: Create a new Human API user and submit an EHR order (optionally with a base64 HIPAA authorization attachment).
+  source_operation: openapi/human-api-admin-user-create-openapi.json#createUser
+- name: get_user_details
+  description: Get the details of a specific user by humanId.
+  source_operation: openapi/human-api-admin-user-details-openapi.json#getUserDetails
+- name: perform_user_action
+  description: Perform an action for a given user (for example cancel an in-flight order).
+  source_operation: openapi/human-api-admin-user-actions-openapi.json#performActionForUser
+- name: list_user_providers
+  description: Retrieve the list of connected health data providers for a given user.
+  source_operation: openapi/human-api-admin-user-providers-openapi.json#userProviders
+- name: list_subscriptions
+  description: Find notification subscriptions for users.
+  source_operation: openapi/human-api-admin-subscriptions-list-openapi.json#getUsersSubscriptions
+- name: create_subscription
+  description: Subscribe a field agent or case manager to notifications about a case.
+  source_operation: openapi/human-api-admin-subscription-create-openapi.json#createSubscription
+- name: get_subscription_details
+  description: Get the details of a specific subscription by subscriptionId.
+  source_operation: openapi/human-api-admin-subscription-details-openapi.json#getSubscriptionDetails
+- name: delete_subscription
+  description: Delete a specific subscription by subscriptionId.
+  source_operation: openapi/human-api-admin-subscription-delete-openapi.json#deleteSubscription
 - name: get_user_reports
   description: Fetch a user's available clinical summary reports (optionally by createdByOrderId).
   source_operation: openapi/human-api-admin-user-reports-openapi.json#getUserReports
+- name: get_report_by_id
+  description: Fetch the content of a specific user report by reportId.
+  source_operation: openapi/human-api-admin-report-by-id-openapi.json#getReportById
+- name: get_consumer_task_link
+  description: Fetch a consumer link to view an order's outstanding tasks.
+  source_operation: openapi/human-api-admin-consumer-link-openapi.json#getTasksLiistLink
+- name: mint_admin_token
+  description: Exchange client_id and client_secret for an Admin API Bearer JWT.
+  source_operation: openapi/human-api-auth-admin-token-openapi.json#post_v1-admin-token
+- name: mint_connect_token
+  description: Mint a public Connect token for an end user (client_id + client_user_id).
+  source_operation: openapi/human-api-auth-connect-token-openapi.json#post_v1-connect-token

@@ -1,0 +1,30 @@
+generated: '2026-08-15'
+method: searched
+source: https://reference.humanapi.co/llms.txt + the full reference.humanapi.co markdown corpus (33 pages)
+note: >-
+  Human API documents NO rate limits. The complete published documentation corpus - every
+  guide, every API reference page and every embedded OpenAPI definition indexed by
+  reference.humanapi.co/llms.txt - was searched for rate-limit, throttle, quota and 429
+  language and returned zero matches. No RateLimit-* / X-RateLimit-* response headers, no
+  Retry-After contract and no 429 response is declared in any of the 15 harvested OpenAPI
+  documents; the declared error surface stops at 400/401/404/409/500. An agent integrating
+  this API has no published runtime backpressure signal to read.
+limit_count: 0
+limits: []
+headers:
+  documented: false
+  observed: []
+  note: >-
+    No rate-limit response headers are documented. Live observation was not possible - the
+    Admin API requires a Bearer JWT minted from partner client credentials, so no
+    unauthenticated 2xx response is available to read headers from.
+exhaustion_status: null
+retry_after: false
+evidence:
+- url: https://reference.humanapi.co/llms.txt
+  status: 200
+  note: documentation index; no rate-limit page listed
+- url: https://reference.humanapi.co/docs/integration-best-practices.md
+  status: 200
+  note: the integration guidance page; covers workflow and status polling, states no limits
+checked: '2026-08-15'

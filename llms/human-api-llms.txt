@@ -35,8 +35,8 @@
 - [/v1/connect/token](https://reference.humanapi.co/reference/post_v1-connect-token.md): Public method for connect to generate tokens
 
 ## Pages
-- [Apple Health & Apple Watch](https://reference.humanapi.co/apple-health-data.md)
-- [Changelog](https://reference.humanapi.co/changelog.md)
-- [Data Network](https://reference.humanapi.co/data-network.md)
-- [Epic Community Member Documentation](https://reference.humanapi.co/epic-documentation.md)
-- [Wellness Sources](https://reference.humanapi.co/wellness-sources.md)
+- [Apple Health & Apple Watch](https://reference.humanapi.co/page/apple-health-data.md)
+- [Changelog](https://reference.humanapi.co/page/changelog.md)
+- [Data Network](https://reference.humanapi.co/page/data-network.md)
+- [Epic Community Member Documentation](https://reference.humanapi.co/page/epic-documentation.md)
+- [Wellness Sources](https://reference.humanapi.co/page/wellness-sources.md)

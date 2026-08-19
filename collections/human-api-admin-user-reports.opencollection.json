@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Admin API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getUserReports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://admin.humanapi.co/api/v1/user/reports",
+            "params": [
+              {
+                "name": "humanId",
+                "value": "",
+                "type": "query",
+                "description": "The humanId of the user"
+              },
+              {
+                "name": "clientUserId",
+                "value": "",
+                "type": "query",
+                "description": "The clientUserId that the subscription is listening to"
+              },
+              {
+                "name": "createdByOrderId",
+                "value": "",
+                "type": "query",
+                "description": "Optional orderId filter"
+              }
+            ]
+          },
+          "docs": "Fetch users available reports"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

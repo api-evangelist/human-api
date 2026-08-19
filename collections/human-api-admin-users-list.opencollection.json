@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Admin API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getUsersList",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://admin.humanapi.co/api/v1/users",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The index of the first record to return"
+              },
+              {
+                "name": "humanId",
+                "value": "",
+                "type": "query",
+                "description": "The humanId of the user"
+              },
+              {
+                "name": "clientUserId",
+                "value": "",
+                "type": "query",
+                "description": "The clientUserId that the subscription is listening to"
+              }
+            ]
+          },
+          "docs": "Get the list of all active users"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

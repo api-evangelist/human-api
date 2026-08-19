@@ -1,11 +1,24 @@
-generated: '2026-07-24'
+generated: '2026-08-15'
 method: generated
-source: openapi/*.json + reference.humanapi.co (grounded on real operationIds)
+source: openapi/*.json (15 harvested specs) + reference.humanapi.co (grounded on real operationIds)
+note: >-
+  Packaged Agent Skills for the Human API Health Intelligence Platform. Every operationId
+  referenced below is verified present in a harvested OpenAPI document in openapi/. The two
+  new skills added 2026-08-15 cover the order-submission and subscription surfaces that were
+  invisible to the previous round, which had only 5 of the 15 operations.
 skills:
+- file: human-api-submit-and-track-an-ehr-order.md
+  name: Submit an EHR order and track it to a terminal state
+  api: openapi/human-api-admin-user-create-openapi.json
+  operations: [createUser, getUserDetails, performActionForUser, getTasksLiistLink, getOrderTypes]
 - file: human-api-order-ehr-and-fetch-reports.md
   name: Order an EHR retrieval and fetch the clinical report
   api: openapi/human-api-admin-order-types-openapi.json
   operations: [getOrderTypes, getUsersList, getUserReports]
+- file: human-api-manage-case-notification-subscriptions.md
+  name: Subscribe case managers to Human API case notifications
+  api: openapi/human-api-admin-subscription-create-openapi.json
+  operations: [createSubscription, getUsersSubscriptions, getSubscriptionDetails, deleteSubscription]
 - file: human-api-connect-user-and-read-health-data.md
   name: Connect a user and read their normalized health data
   api: openapi/human-api-auth-connect-token-openapi.json

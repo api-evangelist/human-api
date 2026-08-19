@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HAPI Auth Public",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "admin",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POST /v1/admin/token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://auth.humanapi.co/v1/admin/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin API client type token"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

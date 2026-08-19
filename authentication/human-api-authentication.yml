@@ -1,7 +1,12 @@
-generated: '2026-07-24'
+generated: '2026-08-15'
 method: derived
-source: openapi/human-api-admin-order-types-openapi.json, openapi/human-api-admin-user-reports-openapi.json,
-  openapi/human-api-admin-users-list-openapi.json
+source: openapi/human-api-admin-consumer-link-openapi.json, openapi/human-api-admin-order-types-openapi.json,
+  openapi/human-api-admin-report-by-id-openapi.json, openapi/human-api-admin-subscription-create-openapi.json,
+  openapi/human-api-admin-subscription-delete-openapi.json, openapi/human-api-admin-subscription-details-openapi.json,
+  openapi/human-api-admin-subscriptions-list-openapi.json, openapi/human-api-admin-user-actions-openapi.json,
+  openapi/human-api-admin-user-create-openapi.json, openapi/human-api-admin-user-details-openapi.json,
+  openapi/human-api-admin-user-providers-openapi.json, openapi/human-api-admin-user-reports-openapi.json
+  ...
 summary:
   types:
   - http
@@ -11,6 +16,16 @@ schemes:
   scheme: bearer
   bearerFormat: JWT
   sources:
+  - openapi/human-api-admin-consumer-link-openapi.json
   - openapi/human-api-admin-order-types-openapi.json
+  - openapi/human-api-admin-report-by-id-openapi.json
+  - openapi/human-api-admin-subscription-create-openapi.json
+  - openapi/human-api-admin-subscription-delete-openapi.json
+  - openapi/human-api-admin-subscription-details-openapi.json
+  - openapi/human-api-admin-subscriptions-list-openapi.json
+  - openapi/human-api-admin-user-actions-openapi.json
+  - openapi/human-api-admin-user-create-openapi.json
+  - openapi/human-api-admin-user-details-openapi.json
+  - openapi/human-api-admin-user-providers-openapi.json
   - openapi/human-api-admin-user-reports-openapi.json
   - openapi/human-api-admin-users-list-openapi.json

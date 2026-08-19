@@ -1,24 +1,46 @@
-generated: '2026-07-24'
-method: derived
-source: openapi/*.json + review.yml + reference.humanapi.co
+generated: '2026-08-15'
+method: searched
+source: >-
+  https://reference.humanapi.co/page/epic-documentation + openapi/*.json (15 specs) +
+  https://risk.lexisnexis.com/products/health-intelligence-ehr
 note: >-
   Human API is a proprietary normalized-health-data REST API. It is explicitly NOT a HL7 FHIR
-  / SMART-on-FHIR implementation (no CapabilityStatement, no .well-known/smart-configuration).
-  No published compliance-certification program (SOC 2 / ISO 27001 / HIPAA attestation page)
-  was found on the public developer surface, so no `Compliance` pointer is asserted.
+  / SMART-on-FHIR implementation - its own Epic Community Member documentation says the
+  Medical API is "modeled after the data types available via FHIR" and that a FHIR-conformant
+  export "adapter system" is still future work. The provider DOES publish a substantive
+  compliance posture on that same page: HIPAA compliance across all data systems, AES-256
+  encryption at rest with rotated keys in a separated key-management cluster, enforced HTTPS
+  in transit, full activity logging, and a point-by-point statement of how the platform
+  retains equivalent functionality to nine ONC 45 CFR 170.315 certification criteria while
+  stating plainly that it is NOT formally ONC-certified. That published page is what the
+  `Compliance` pointer in apis.yml resolves to. No SOC 2, ISO 27001 or HITRUST attestation,
+  and no trust center, was found on any public Human API or LexisNexis Risk host.
 standards:
-- id: oauth2
-  conforms: false
-  evidence: OAuth2-style token exchange, but securitySchemes are declared as http bearer (JWT), not oauth2 flows.
 - id: bearer-jwt
   conforms: true
-  evidence: bearerAuth (http bearer, bearerFormat JWT) across the Admin API.
+  evidence: bearerAuth (http bearer, bearerFormat JWT) applied across all 13 Admin API operations.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    Token exchange is OAuth2-style (client_id/client_secret to /v1/admin/token) but the specs
+    declare no oauth2 securityScheme, no flows, no authorization endpoint and no scopes.
+- id: oidc
+  conforms: false
+  evidence: No /.well-known/openid-configuration on any host (404).
+- id: rfc8414-oauth-metadata
+  conforms: false
+  evidence: No /.well-known/oauth-authorization-server on any host (404).
 - id: rfc9457-problem-details
   conforms: false
-  evidence: Errors use a proprietary { code, error, message } envelope, not application/problem+json.
+  evidence: Errors use proprietary { code, error, message } and { statusCode, error, message, validation } envelopes, not application/problem+json.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: No first-party security.txt; the 200 on status.humanapi.co is Atlassian Statuspage's vendor file.
 - id: fhir-r4
   conforms: false
-  evidence: No FHIR resources or /metadata CapabilityStatement (404).
+  evidence: >-
+    No FHIR resources, no /metadata CapabilityStatement. Provider states the Medical API is
+    "modeled after" FHIR data types and that a FHIR-spec export adapter is planned, not shipped.
 - id: smart-on-fhir
   conforms: false
   evidence: No /.well-known/smart-configuration (404).
@@ -26,6 +48,43 @@ standards:
   conforms: false
 - id: carin-blue-button
   conforms: false
+- id: hipaa
+  conforms: true
+  evidence: >-
+    "All data systems at Human API are HIPAA compliant" - published at
+    https://reference.humanapi.co/page/epic-documentation, alongside encryption, transmission
+    and audit-logging detail. Order submission carries a hipaaAuthorization attachment type.
+- id: onc-170.315
+  conforms: partial
+  evidence: >-
+    Provider states "we are not formally certified by the ONC" but documents equivalent
+    functionality against (b)(6), (d)(1), (d)(2), (d)(3), (d)(5), (d)(7), (d)(8), (d)(9),
+    (d)(11) and (g)(3) at https://reference.humanapi.co/page/epic-documentation.
+- id: epic-developer-guidelines
+  conforms: true
+  evidence: >-
+    Point-by-point compliance statement against Epic's Developer Guidelines (Transparency,
+    Safety, Security, Privacy, Sharing, Reliability, Efficiency, Data Integrity,
+    Verifiability, Reciprocity) as an Epic Community Member.
+- id: fcra
+  conforms: true
+  evidence: >-
+    Order Summary notifications carry an fcraSuppressed flag, and the parent LexisNexis Risk
+    Solutions operates the product under consumer-reporting obligations.
 - id: offset-pagination
   conforms: true
   evidence: GET /api/v1/users accepts an offset parameter.
+- id: idempotency
+  conforms: false
+  evidence: No Idempotency-Key header or idempotent-retry contract in any spec or doc page.
+certifications:
+  published: []
+  claimed:
+  - name: HIPAA
+    scope: all data systems
+    source: https://reference.humanapi.co/page/epic-documentation
+    third_party_attestation_published: false
+  note: >-
+    HIPAA is a self-asserted compliance claim on a documentation page, not a published
+    third-party attestation report. No SOC 2 Type II, ISO 27001 or HITRUST certificate was
+    found on any Human API or LexisNexis Risk Solutions surface reachable without a sales contact.

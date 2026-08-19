@@ -1,61 +1,93 @@
-generated: '2026-07-24'
+generated: '2026-08-15'
 method: searched
-source: https://github.com/humanapi (official org) + npm/PyPI/RubyGems registries
+source: https://github.com/humanapi (official org) + npm, PyPI and RubyGems registry metadata endpoints
 note: >-
   Human API's client libraries date from the consumer Data API era and live in the
-  github.com/humanapi organization. Registry-published packages were verified against
-  that org (first-party) or noted as community. The humanapi-mcp npm package is a
-  DIFFERENT company (humanapi.ru) and is deliberately excluded.
+  github.com/humanapi organization. Registry-published packages were verified against that
+  org (first-party) or noted as community. The humanapi-mcp npm package is a DIFFERENT
+  company (humanapi.ru) and is deliberately excluded. CURRENCY IS THE HEADLINE HERE: every
+  registry-published first-party library except the Human Connect widget last shipped in
+  2013. The Python SDK (which also provides the CLI) was last released 2013-10-03 and the
+  Passport strategy 2013-07-06 - more than a decade before the v3.0 Health Intelligence
+  Platform Admin API these libraries do not cover. Only humanapi-connect-client is
+  maintained (2.4.5, 2026-01-27), which matches the product's shift from a consumer data
+  SDK story to an enterprise EHR-ordering API with an embeddable connect widget.
 packages:
-- language: python
-  registry: pypi
-  name: humanapi
-  url: https://pypi.org/project/humanapi/
-  install: pip install humanapi
-  official: true
-  source: https://github.com/humanapi/humanapi-python-client
-  note: A CLI client and Python API library for the HumanAPI health data platform (Ola Wiberg, ola@humanapi.co).
 - language: javascript
   registry: npm
   name: humanapi-connect-client
   url: https://www.npmjs.com/package/humanapi-connect-client
   install: npm install humanapi-connect-client
   official: true
+  version: 2.4.5
+  published: '2026-01-27'
   source: https://github.com/humanapi/connect-client
-  note: Spawn Human Connect (the user data-source connection widget) within your application.
+  note: Spawn Human Connect (the user data-source connection widget) within your application. The only actively maintained first-party package.
+- language: python
+  registry: pypi
+  name: humanapi
+  url: https://pypi.org/project/humanapi/
+  install: pip install humanapi
+  official: true
+  version: 0.1.10
+  published: '2013-10-03'
+  source: https://github.com/humanapi/humanapi-python-client
+  note: >-
+    A CLI client and Python API library for the HumanAPI health data platform (Ola Wiberg,
+    ola@humanapi.co). Last released 2013-10-03; predates the v3.0-HIP Admin API entirely and
+    wraps the legacy consumer Data API only.
 - language: javascript
   registry: npm
   name: passport-humanapi
   url: https://www.npmjs.com/package/passport-humanapi
   install: npm install passport-humanapi
   official: true
+  version: 0.1.0
+  published: '2013-07-06'
   source: https://github.com/humanapi/passport-humanapi
-  note: HumanAPI authentication strategy for Passport / Express.
+  note: HumanAPI authentication strategy for Passport / Express. Single release, 2013.
 - language: ruby
   registry: rubygems
   name: humanapi
   url: https://rubygems.org/gems/humanapi
   install: gem install humanapi
   official: false
+  version: 0.0.2
+  published: '2013-07-06'
   source: https://github.com/maccman/humanapi
   note: API client for HumanAPI (Alex MacCaw, Human API co-founder; personal repo, not the org).
 - language: java
   registry: github
   name: humanapi-java-client
   url: https://github.com/humanapi/humanapi-java-client
-  install: "clone github.com/humanapi/humanapi-java-client"
+  install: clone github.com/humanapi/humanapi-java-client
   official: true
+  version: null
+  published: null
+  note: Source-only distribution; no Maven Central coordinates published, so there is no registry metadata endpoint to read a version from.
 - language: java
   registry: github
   name: humanapi-android-client
   url: https://github.com/humanapi/humanapi-android-client
-  install: "clone github.com/humanapi/humanapi-android-client"
+  install: clone github.com/humanapi/humanapi-android-client
   official: true
-  note: HumanAPI Android client.
+  version: null
+  published: null
+  note: HumanAPI Android client. Source-only distribution; not published to Maven Central or any registry.
 - language: objective-c
   registry: github
   name: humanapi-ios-client
   url: https://github.com/humanapi/humanapi-ios-client
-  install: "clone github.com/humanapi/humanapi-ios-client"
+  install: clone github.com/humanapi/humanapi-ios-client
   official: true
-  note: HumanAPI iOS client.
+  version: null
+  published: null
+  note: HumanAPI iOS client. Source-only distribution; no CocoaPods/SPM registry entry found.
+summary:
+  official_registry_packages: 3
+  actively_maintained: 1
+  last_release_newest: '2026-01-27'
+  last_release_oldest: '2013-07-06'
+  decay_signal: >-
+    2 of 3 registry-published first-party SDKs last shipped in 2013; none of them covers the
+    current v3.0-HIP Admin API surface documented at reference.humanapi.co.

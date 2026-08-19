@@ -1,45 +1,45 @@
-generated: '2026-07-24'
+generated: '2026-08-15'
 method: derived
-source: mcp/human-api-mcp.yml (candidate) + openapi/*.json
+source: mcp/human-api-mcp.yml (candidate) + openapi/*.json (15 operations)
 note: >-
   Crosswalk binding the derived MCP candidate tools to their backing OpenAPI operations.
-  There is no official hosted MCP server and no GraphQL surface; the MCP column is a
-  candidate projection of the REST Admin API, so every binding is high-confidence by
-  construction. rest_only[] lists harvested operations not surfaced as a candidate tool.
+  There is no official hosted MCP server and no GraphQL surface, so the MCP column is a
+  candidate projection of the REST Admin + Auth APIs and every binding is high-confidence by
+  construction. mcp_only[] is empty by definition here. rest_only[] is now empty too - after
+  this round every harvested operation has a candidate tool.
 surfaces:
-  openapi: openapi/*.json (per-endpoint OpenAPI 3.0.3, ReadMe-generated)
+  openapi:
+    path: openapi/*.json
+    format: OpenAPI 3.0.3, one document per endpoint (ReadMe-generated, harvested from the
+      per-operation reference pages)
+    operations: 15
+    gated: false
   graphql: null
   mcp:
     url: null
     status: candidate
     gated: false
 crosswalk:
-- tool: get_order_types
-  category: orders
-  rest: [getOrderTypes]
-  binding: rest
-  confidence: high
-- tool: list_users
-  category: users
-  rest: [getUsersList]
-  binding: rest
-  confidence: high
-- tool: get_user_reports
-  category: reports
-  rest: [getUserReports]
-  binding: rest
-  confidence: high
+- { tool: get_order_types, category: orders, rest: [getOrderTypes], binding: rest, confidence: high }
+- { tool: list_users, category: users, rest: [getUsersList], binding: rest, confidence: high }
+- { tool: create_user, category: users, rest: [createUser], binding: rest, confidence: high, note: Also the order-submission entry point; the request body carries the EHR order and any HIPAA authorization attachment. }
+- { tool: get_user_details, category: users, rest: [getUserDetails], binding: rest, confidence: high }
+- { tool: perform_user_action, category: users, rest: [performActionForUser], binding: rest, confidence: high, note: Consequential - can cancel an in-flight order; returns 409 when the order is already terminal. }
+- { tool: list_user_providers, category: users, rest: [userProviders], binding: rest, confidence: high }
+- { tool: list_subscriptions, category: subscriptions, rest: [getUsersSubscriptions], binding: rest, confidence: high }
+- { tool: create_subscription, category: subscriptions, rest: [createSubscription], binding: rest, confidence: high }
+- { tool: get_subscription_details, category: subscriptions, rest: [getSubscriptionDetails], binding: rest, confidence: high }
+- { tool: delete_subscription, category: subscriptions, rest: [deleteSubscription], binding: rest, confidence: high, note: Destructive. }
+- { tool: get_user_reports, category: reports, rest: [getUserReports], binding: rest, confidence: high }
+- { tool: get_report_by_id, category: reports, rest: [getReportById], binding: rest, confidence: high, note: Returns protected health information. }
+- { tool: get_consumer_task_link, category: resources, rest: [getTasksLiistLink], binding: rest, confidence: high, note: operationId is misspelled in the provider's own spec (getTasksLiistLink); preserved verbatim. }
+- { tool: mint_admin_token, category: auth, rest: [post_v1-admin-token], binding: rest, confidence: high, note: The Auth API operation declares no operationId in the provider spec; identified by method+path. }
+- { tool: mint_connect_token, category: auth, rest: [post_v1-connect-token], binding: rest, confidence: high, note: The Auth API operation declares no operationId in the provider spec; identified by method+path. }
 mcp_only: []
-rest_only:
-- operationId: post_v1-admin-token
-  capability: auth
-  note: Admin API token exchange (POST /v1/admin/token); not exposed as a tool.
-- operationId: post_v1-connect-token
-  capability: auth
-  note: Connect token exchange (POST /v1/connect/token); not exposed as a tool.
+rest_only: []
 coverage:
-  tools_named: 3
-  tools_bound: 3
+  tools_named: 15
+  tools_bound: 15
   mcp_only: 0
-  rest_ops_total: 5
-  rest_ops_with_tool: 3
+  rest_ops_total: 15
+  rest_ops_with_tool: 15

@@ -1,0 +1,239 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "description": "You can use Admin API to create and manage your Human API users",
+    "version": "1.0.0",
+    "title": "Admin API",
+    "termsOfService": "https://www.humanapi.co/developer-terms",
+    "contact": {
+      "email": "help@humanapi.co",
+      "url": "https://www.humanapi.co/contact"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://admin.humanapi.co",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "users",
+      "description": "API endpoints to manage users",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://reference.humanapi.co/docs/admin-api"
+      }
+    }
+  ],
+  "paths": {
+    "/api/v1/users/actions": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "description": "Performs an action for a given user",
+        "operationId": "performActionForUser",
+        "requestBody": {
+          "description": "Performs an action for a given user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/performActionForUser"
+              },
+              "examples": {
+                "abortWithHumanId": {
+                  "summary": "Perform an action for a user by humanId",
+                  "value": {
+                    "humanId": "123456789",
+                    "action": "abort"
+                  }
+                },
+                "abortWithClientUserId": {
+                  "summary": "Perform an action for a user by clientUserId",
+                  "value": {
+                    "clientUserId": "some-client-user-id",
+                    "action": "abort"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Request accepted"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "409": {
+            "description": "Conflict -- the order is in a state where it can\u2019t be aborted. (For example: Cancelled or Completed)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "example": {
+                  "code": 409,
+                  "error": "Conflict",
+                  "message": "The order is in a state where it can\u2019t be aborted",
+                  "x-humanapi-request-id": "05518ca2-1c9a-434e-8512-7284bbc54137"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "error": {
+        "type": "object",
+        "required": [
+          "statusCode",
+          "error",
+          "message",
+          "x-humanapi-request-id"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "x-humanapi-request-id": {
+            "type": "string"
+          }
+        }
+      },
+      "actionForUsersActionAttribute": {
+        "type": "string",
+        "enum": [
+          "resync",
+          "abort"
+        ]
+      },
+      "actionForUserHumanId": {
+        "title": "Action for user by humanId",
+        "type": "object",
+        "required": [
+          "action",
+          "humanId"
+        ],
+        "properties": {
+          "humanId": {
+            "type": "string"
+          },
+          "action": {
+            "$ref": "#/components/schemas/actionForUsersActionAttribute"
+          }
+        }
+      },
+      "actionForUserClientUserId": {
+        "title": "Action for user by clientUserId",
+        "type": "object",
+        "required": [
+          "action",
+          "clientUserId"
+        ],
+        "properties": {
+          "clientUserId": {
+            "type": "string"
+          },
+          "action": {
+            "$ref": "#/components/schemas/actionForUsersActionAttribute"
+          }
+        }
+      },
+      "performActionForUser": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/actionForUserHumanId"
+          },
+          {
+            "$ref": "#/components/schemas/actionForUserClientUserId"
+          }
+        ]
+      }
+    },
+    "responses": {
+      "badRequest": {
+        "description": "Cannot process input data",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            },
+            "example": {
+              "code": 400,
+              "error": "Bad Request",
+              "message": "Bad Request",
+              "x-humanapi-request-id": "05518ca2-1c9a-434e-8512-7284bbc54137"
+            }
+          }
+        }
+      },
+      "unauthorized": {
+        "description": "The token provided is invalid. It may have expired or may have been revoked.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            },
+            "example": {
+              "code": 401,
+              "error": "Unauthorized",
+              "message": "Cannot authenticate you with this token",
+              "x-humanapi-request-id": "05518ca2-1c9a-434e-8512-7284bbc54137"
+            }
+          }
+        }
+      },
+      "notFound": {
+        "description": "The specified resource was not found (e.g. the id does not exist)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            },
+            "example": {
+              "code": 404,
+              "error": "Not Found",
+              "message": "Not Found",
+              "x-humanapi-request-id": "05518ca2-1c9a-434e-8512-7284bbc54137"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}

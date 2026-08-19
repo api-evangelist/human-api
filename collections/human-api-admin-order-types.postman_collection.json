@@ -1,0 +1,168 @@
+{
+  "item": [
+    {
+      "id": "a3b06e5d-63a7-4a31-95dd-015aefda20a4",
+      "name": "orders",
+      "description": {
+        "content": "API endpoints to get orders",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8418e50e-b4c5-4cea-ba54-0c56d554f3a5",
+          "name": "get Order Types",
+          "request": {
+            "name": "get Order Types",
+            "description": {
+              "content": "Get available order types for the logged in Client App",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "order-types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bf290e31-64b4-4c5d-b10e-0bdc22da3ab7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "order-types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"orderType\": \"full\",\n    \"orderTypeAlias\": \"Healthcheck Order\",\n    \"orderTypeDescription\": \"Full patient healthcheck order\"\n  },\n  {\n    \"orderType\": \"full\",\n    \"orderTypeAlias\": \"Healthcheck Order\",\n    \"orderTypeDescription\": \"Full patient healthcheck order\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81b58026-cd14-4c33-bf06-7cd0f7170c16",
+              "name": "There was an internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "order-types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 500,\n  \"error\": \"Internal Server Error\",\n  \"message\": \"Internal Server Error\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://admin.humanapi.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e1c755e2-5a2f-4d62-9765-0bc5156e9ac2",
+    "name": "Admin API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "You can use Admin API to create and manage your Human API users\n\nContact Support:\n Email: help@humanapi.co",
+      "type": "text/plain"
+    }
+  }
+}

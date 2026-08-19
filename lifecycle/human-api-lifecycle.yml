@@ -1,29 +1,64 @@
-generated: '2026-07-24'
+generated: '2026-08-15'
 method: searched
-source: reference.humanapi.co (order-fulfillment-lifecycle, overview) + status.humanapi.co
+source: >-
+  reference.humanapi.co (overview, order-fulfillment-lifecycle, changelog) +
+  status.humanapi.co/api/v2/summary.json + resolved humanapi.co redirect chain
 versioning:
   scheme: uri-path + docs-version
   current: v3.0-HIP
   legacy: v2.1 (consumer Data API)
   docs: https://reference.humanapi.co/docs/overview
+  note: >-
+    Admin/HIP paths are prefixed /api/v1 and the auth endpoints /v1/*; the URI version has not
+    moved even as the product went from v2.1 to v3.0-HIP. All 15 OpenAPI documents declare
+    info.version 1.0.0.
 deprecation:
   policy_url: null
   sunset_header: false
   note: >-
-    The v2.1 consumer Data API is documented as legacy but no formal deprecation policy or
-    RFC 8594 Sunset/Deprecation header support is published.
+    The v2.1 consumer Data API is documented as legacy but no formal deprecation policy, no
+    end-of-life date and no RFC 8594 Sunset/Deprecation header support is published. No
+    `Deprecation` pointer is asserted in apis.yml because there is no deprecation policy page
+    to point at.
+changelog:
+  url: https://reference.humanapi.co/page/changelog
+  published: false
+  entry_count: 0
+  ref: changelog/human-api-changelog.yml
+  note: The Changelog page exists in the docs navigation but is empty.
 status_page: https://status.humanapi.co/
+status_page_detail:
+  provider: Atlassian Statuspage
+  api: https://status.humanapi.co/api/v2/summary.json
+  live: true
+  checked: '2026-08-15'
+  components_sample: [API, Medical, Wellness, Human API Portal, Apple Health, Fitbit, Garmin, Google Fit, MyFitnessPal]
+  note: >-
+    The status page is actively maintained (page.updated_at 2026-08-15) and decomposes status
+    per upstream data source as well as per Human API service - unusually granular for an
+    aggregator, and the strongest operational-transparency signal this provider publishes.
 sla:
   url: null
   uptime_target: null
+  note: No SLA or uptime target is published on any public surface; terms are set per partner agreement.
 order_lifecycle:
   note: >-
     An Order (EHR retrieval) transitions through a documented fulfillment lifecycle; terminal
-    states are reported via Order Summary notifications.
-  states:
-  - Created
-  - In Progress
-  - Pended
-  - Completed
-  - Cancelled
+    states are reported via Order Summary notifications, and performActionForUser returns 409
+    when an order is already terminal and cannot be aborted.
+  states: [Created, In Progress, Pended, Completed, Cancelled]
+  docs: https://reference.humanapi.co/docs/order-fulfillment-lifecycle
+corporate:
+  status: acquired-and-rebranded
+  parent: LexisNexis Risk Solutions
+  product_name: LexisNexis Health Intelligence (formerly Human API Health Intelligence)
+  note: >-
+    As of this probe humanapi.co and www.humanapi.co 301-redirect to
+    https://risk.lexisnexis.com/products/health-intelligence-ehr, and the developer Terms of
+    Service now resolve to a PDF hosted on risk.lexisnexis.com. The humanapi.co brand survives
+    only on the operational subdomains - reference. (docs), developer. (portal), admin./auth./api.
+    (APIs), status., my. and support. The marketing brand has been folded into the parent.
+  evidence:
+  - { url: 'https://www.humanapi.co/', status: 200, final: 'https://risk.lexisnexis.com/products/health-intelligence-ehr' }
+  - { url: 'https://www.humanapi.co/developer-terms', status: 200, final: 'https://risk.lexisnexis.com/-/media/files/insurance/health%20intelligence%20ehr/developer%20terms%20of%20service%20pdf.pdf' }
 deprecated_operations: []

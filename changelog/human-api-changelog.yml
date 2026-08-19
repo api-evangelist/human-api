@@ -1,0 +1,35 @@
+generated: '2026-08-15'
+method: probed
+source: https://reference.humanapi.co/page/changelog.md
+note: >-
+  Human API publishes a Changelog PAGE in its documentation navigation (it is listed in
+  reference.humanapi.co/llms.txt), but the page has NO CONTENT. The markdown twin returns
+  HTTP 200 with a heading and an empty container div and nothing else; its own updatedAt
+  stamp is 2026-02-13. There is no dated release history, no version list and no breaking-change
+  record anywhere on the public developer surface. Because an empty page is a published
+  absence rather than a published changelog, NO `ChangeLog` pointer is wired into apis.yml -
+  the artifact records the finding instead of crediting a surface that does not exist.
+published: false
+scheme: null
+current_version: v3.0-HIP
+entry_count: 0
+entries: []
+version_signals:
+- signal: docs-version-selector
+  detail: >-
+    The ReadMe docs site is versioned - v3.0-HIP is current, v2.1 is the legacy consumer Data
+    API - which is the only public indication of a version transition.
+- signal: openapi-info-version
+  detail: All 15 harvested OpenAPI documents declare info.version 1.0.0 and never change it.
+- signal: readme-updatedAt
+  detail: >-
+    Each documentation page carries an updatedAt frontmatter stamp (most recent observed
+    2026-06-24 on integration-best-practices), which is the closest thing to a change record.
+evidence:
+- url: https://reference.humanapi.co/page/changelog.md
+  status: 200
+  note: 285 bytes, heading plus an empty div
+- url: https://reference.humanapi.co/llms.txt
+  status: 200
+  note: lists the Changelog page under ## Pages
+checked: '2026-08-15'

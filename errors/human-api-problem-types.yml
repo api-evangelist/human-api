@@ -1,32 +1,86 @@
-generated: '2026-07-24'
+generated: '2026-08-15'
 method: derived
-source: openapi/*.json (4xx/5xx responses) + shared `error` schema
+source: openapi/*.json (4xx/5xx responses across all 15 harvested specs) + https://reference.humanapi.co/llms.txt reference corpus
 format: proprietary-json
 note: >-
   Human API does not use RFC 9457 problem+json. Errors are returned as a JSON object with
-  the shape below (from the shared `error` schema in the Admin API specs). The
-  x-humanapi-request-id field echoes the request id for support correlation.
+  the shape below (from the shared `error` schema declared in every Admin API spec). The
+  x-humanapi-request-id field echoes the request id for support correlation. Validation
+  failures use a SECOND, different envelope (`errorInvalidInput`) that renames `code` to
+  `statusCode` and adds a `validation` block - two error shapes on the same API is a real
+  agent-facing hazard and is recorded here rather than smoothed over. There is no published
+  error-code registry; every code below is enumerated from the specs themselves.
 envelope:
   media_type: application/json
+  shape: '{ code, error, message, x-humanapi-request-id }'
   fields:
   - name: code
-    description: Machine-readable error code.
+    description: Numeric HTTP status repeated in the body.
   - name: error
-    description: Short error label.
+    description: Short error label (reason phrase).
   - name: message
     description: Human-readable error detail.
   - name: x-humanapi-request-id
-    description: Request identifier for support/tracing correlation.
+    description: Request identifier (UUID) for support/tracing correlation.
+alternate_envelope:
+  name: errorInvalidInput
+  media_type: application/json
+  shape: '{ statusCode, error, message, validation: { source, keys[] }, x-humanapi-request-id }'
+  used_by: [createUser, performActionForUser, userProviders]
+  note: >-
+    Semantic/validation errors return statusCode instead of code and add a validation object
+    naming the offending payload keys. A client parsing only `code` will read undefined here.
 problems:
+- status: 400
+  title: Bad Request
+  description: Cannot process input data.
+  envelope: error
+  example_message: Bad Request
+  source_operations: [createUser, performActionForUser, userProviders]
+- status: 400
+  title: Invalid Entity
+  description: There is a semantic error with the content of the request; `validation.keys[]` names the offending fields.
+  envelope: errorInvalidInput
+  example_message: '"dateOfBirth" must be a valid date'
+  source_operations: [createUser, performActionForUser, userProviders]
 - status: 401
   title: Unauthorized
-  description: Missing, invalid, or expired Bearer token.
-  source_operation: openapi/human-api-admin-users-list-openapi.json#getUsersList
+  description: The token provided is invalid. It may have expired or may have been revoked.
+  envelope: error
+  example_message: Cannot authenticate you with this token
+  remediation: Mint a fresh Bearer JWT via POST https://auth.humanapi.co/v1/admin/token and retry.
+  source_operations: [getUsersList, createUser, getUserDetails, performActionForUser, userProviders, getUsersSubscriptions, createSubscription, getSubscriptionDetails, getUserReports, getReportById, getTasksLiistLink]
 - status: 404
   title: Not Found
-  description: The requested user, report, or resource does not exist.
-  source_operation: openapi/human-api-admin-user-reports-openapi.json#getUserReports
+  description: The specified resource was not found (e.g. the id does not exist).
+  envelope: error
+  example_message: Not Found
+  source_operations: [getUsersList, createUser, getUserDetails, performActionForUser, userProviders, getUsersSubscriptions, createSubscription, getSubscriptionDetails, getUserReports, getReportById, getTasksLiistLink]
+- status: 409
+  title: Conflict
+  description: There is a conflict with the specified resource (e.g. it may already exist).
+  envelope: error
+  example_message: Unable to match the login of the new user to an existing user found for that user
+  source_operations: [createUser, createSubscription]
+- status: 409
+  title: Conflict (order state)
+  description: The order is in a state where it cannot be aborted (for example Cancelled or Completed).
+  envelope: error
+  remediation: Read the order's terminal state from the Order Summary notification before attempting a cancel action.
+  source_operations: [performActionForUser]
 - status: 500
   title: Internal Server Error
-  description: Unexpected server-side error.
-  source_operation: openapi/human-api-admin-order-types-openapi.json#getOrderTypes
+  description: There was an internal server error.
+  envelope: error
+  example_message: Internal Server Error
+  source_operations: [getOrderTypes]
+coverage:
+  operations_total: 15
+  operations_with_declared_errors: 11
+  operations_without_declared_errors: [getOrderTypes-partial, post_v1-admin-token, post_v1-connect-token]
+  note: >-
+    Both auth token operations (POST /v1/admin/token, POST /v1/connect/token) declare ONLY a
+    200 response - the failure contract for authentication itself is undocumented, which is
+    the single biggest error-semantics gap on this API.
+  rate_limit_error: none
+  note_429: No 429 response is declared anywhere; see rate-limits/human-api-rate-limits.yml.

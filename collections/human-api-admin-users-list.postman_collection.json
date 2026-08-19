@@ -1,0 +1,271 @@
+{
+  "item": [
+    {
+      "id": "ec3f8e94-8fe1-4363-b1ed-4a6bf2e80637",
+      "name": "users",
+      "description": {
+        "content": "API endpoints to manage users",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c0578132-da62-41bd-abec-2fd22c5eff37",
+          "name": "get Users List",
+          "request": {
+            "name": "get Users List",
+            "description": {
+              "content": "Get the list of all active users",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The index of the first record to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "humanId",
+                  "value": "<string>",
+                  "description": "The humanId of the user"
+                },
+                {
+                  "disabled": false,
+                  "key": "clientUserId",
+                  "value": "<string>",
+                  "description": "The clientUserId that the subscription is listening to"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f89b0816-2846-4ae5-ad8b-b68beef5cc40",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "humanId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientUserId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"humanId\": \"string\",\n    \"clientUserEmail\": \"string\",\n    \"createdAt\": \"1996-01-26T15:23:15.168Z\",\n    \"updatedAt\": \"2010-01-08T20:17:39.951Z\",\n    \"status\": \"string\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n    \"suggestedSources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"inviteLink\": \"string\"\n  },\n  {\n    \"humanId\": \"string\",\n    \"clientUserEmail\": \"string\",\n    \"createdAt\": \"2015-10-22T00:13:17.681Z\",\n    \"updatedAt\": \"1959-11-13T05:12:18.899Z\",\n    \"status\": \"string\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n    \"suggestedSources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"inviteLink\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2399fdfc-cc05-4bea-90e2-b10b154728d4",
+              "name": "The token provided is invalid. It may have expired or may have been revoked.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "humanId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientUserId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Cannot authenticate you with this token\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2825143f-f281-4909-b27b-3d49da1de2f0",
+              "name": "The specified resource was not found (e.g. the id does not exist)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "humanId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientUserId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Not Found\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://admin.humanapi.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9f773310-4dee-411f-8a98-24ccd7d264de",
+    "name": "Admin API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "You can use Admin API to create and manage your Human API users\n\nContact Support:\n Email: help@humanapi.co",
+      "type": "text/plain"
+    }
+  }
+}
