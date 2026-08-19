@@ -28,7 +28,7 @@ tags:
 - Health API
 created: '2026-07-24'
 modified: '2026-08-15'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: human-api:human-api-admin-api
   name: Human API Admin API
