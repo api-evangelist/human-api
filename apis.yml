@@ -45,6 +45,11 @@ apis:
   - Healthcare
   - EHR
   - Health Data
+  - Order
+  tags_raw:
+  - Healthcare
+  - EHR
+  - Health Data
   - Orders
   properties:
   - type: Documentation
@@ -88,6 +93,9 @@ apis:
   humanURL: https://reference.humanapi.co/docs/overview
   baseURL: https://auth.humanapi.co
   tags:
+  - Authentication
+  - Tokens
+  tags_raw:
   - Authentication
   - OAuth2
   - Tokens
