@@ -30,89 +30,13 @@ created: '2026-07-24'
 modified: '2026-08-15'
 specificationVersion: '0.23'
 apis:
-- aid: human-api:human-api-admin-api
-  name: Human API Admin API
-  description: >-
-    The Health Intelligence Platform (HIP) Admin API for creating and managing Human API
-    users, submitting and managing EHR order types, managing subscriptions, and fetching
-    delivered clinical summary reports and order resources. Secured with a Bearer JWT
-    (bearerAuth). Documented endpoints include /api/v1/order-types, /api/v1/users,
-    /api/v1/users/actions, /api/v1/users/{humanId}, /api/v1/users/providers,
-    /api/v1/subscriptions, /api/v1/user/reports, and /api/v1/resources/consumer-link.
-  humanURL: https://reference.humanapi.co/docs/overview
-  baseURL: https://admin.humanapi.co
-  tags:
-  - Healthcare
-  - EHR
-  - Health Data
-  - Order
-  tags_raw:
-  - Healthcare
-  - EHR
-  - Health Data
-  - Orders
-  properties:
-  - type: Documentation
-    url: https://reference.humanapi.co/docs/overview
-  - type: APIReference
-    url: https://reference.humanapi.co/reference/getordertypes
-  - type: OpenAPI
-    url: openapi/human-api-admin-order-types-openapi.json
-  - type: OpenAPI
-    url: openapi/human-api-admin-users-list-openapi.json
-  - type: OpenAPI
-    url: openapi/human-api-admin-user-reports-openapi.json
-  - type: OpenAPI
-    url: openapi/human-api-admin-user-create-openapi.json
-  - type: OpenAPI
-    url: openapi/human-api-admin-user-details-openapi.json
-  - type: OpenAPI
-    url: openapi/human-api-admin-user-actions-openapi.json
-  - type: OpenAPI
-    url: openapi/human-api-admin-user-providers-openapi.json
-  - type: OpenAPI
-    url: openapi/human-api-admin-subscriptions-list-openapi.json
-  - type: OpenAPI
-    url: openapi/human-api-admin-subscription-create-openapi.json
-  - type: OpenAPI
-    url: openapi/human-api-admin-subscription-details-openapi.json
-  - type: OpenAPI
-    url: openapi/human-api-admin-subscription-delete-openapi.json
-  - type: OpenAPI
-    url: openapi/human-api-admin-report-by-id-openapi.json
-  - type: OpenAPI
-    url: openapi/human-api-admin-consumer-link-openapi.json
-- aid: human-api:human-api-authentication-api
-  name: Human API Authentication API
-  description: >-
-    The HAPI Auth Public API for facilitating token exchange with external authentication
-    systems. Exposes POST /v1/admin/token (Admin API client-type token via
-    client_id/client_secret) and POST /v1/connect/token (public Connect token via
-    client_id/client_user_id with optional client_secret, client_user_email, and
-    extra_scopes). Served from https://auth.humanapi.co.
-  humanURL: https://reference.humanapi.co/docs/overview
-  baseURL: https://auth.humanapi.co
-  tags:
-  - Authentication
-  - Tokens
-  tags_raw:
-  - Authentication
-  - OAuth2
-  - Tokens
-  properties:
-  - type: Documentation
-    url: https://reference.humanapi.co/docs/overview
-  - type: OpenAPI
-    url: openapi/human-api-auth-admin-token-openapi.json
-  - type: OpenAPI
-    url: openapi/human-api-auth-connect-token-openapi.json
 - aid: human-api:human-api-data-api
   name: Human API Data API
   description: >-
-    The consumer-mediated Data API (legacy v2.1) for querying a user's normalized health
-    data - wellness data from wearable devices and apps, and medical data (records, labs,
-    medications, encounters) from health providers. Queries use the user's accessToken as a
-    Bearer credential in a GET request against the base URL https://api.humanapi.co/v1/human.
+    The consumer-mediated Data API (legacy v2.1) for querying a user's normalized health data - wellness
+    data from wearable devices and apps, and medical data (records, labs, medications, encounters) from
+    health providers. Queries use the user's accessToken as a Bearer credential in a GET request against
+    the base URL https://api.humanapi.co/v1/human.
   humanURL: https://reference.humanapi.co/v2.1/docs/data-overview
   baseURL: https://api.humanapi.co/v1/human
   tags:
@@ -125,6 +49,104 @@ apis:
     url: https://reference.humanapi.co/v2.1/docs/data-overview
   - type: APIReference
     url: https://reference.humanapi.co/v2.1/docs/overview
+- aid: human-api:human-api-admin-api
+  name: Human API Admin API
+  description: API endpoints to authorize a client app for the Admin API
+  humanURL: https://reference.humanapi.co/docs/overview
+  baseURL: https://admin.humanapi.co
+  tags:
+  - admin
+  properties:
+  - type: OpenAPI
+    url: openapi/human-api-admin-api-openapi.yml
+  - type: Documentation
+    url: https://reference.humanapi.co/docs/overview
+  - type: APIReference
+    url: https://reference.humanapi.co/reference/getordertypes
+- aid: human-api:human-api-connect-api
+  name: Human API Connect API
+  description: API endpoints to generate tokens for Connect App
+  humanURL: https://reference.humanapi.co/docs/overview
+  baseURL: https://admin.humanapi.co
+  tags:
+  - connect
+  properties:
+  - type: OpenAPI
+    url: openapi/human-api-connect-api-openapi.yml
+  - type: Documentation
+    url: https://reference.humanapi.co/docs/overview
+  - type: APIReference
+    url: https://reference.humanapi.co/reference/getordertypes
+- aid: human-api:human-api-orders-api
+  name: Human API Orders API
+  description: API endpoints to get orders
+  humanURL: https://reference.humanapi.co/docs/overview
+  baseURL: https://admin.humanapi.co
+  tags:
+  - orders
+  properties:
+  - type: OpenAPI
+    url: openapi/human-api-orders-api-openapi.yml
+  - type: Documentation
+    url: https://reference.humanapi.co/docs/overview
+  - type: APIReference
+    url: https://reference.humanapi.co/reference/getordertypes
+- aid: human-api:human-api-reports-api
+  name: Human API Reports API
+  description: API endpoints to manage user resports
+  humanURL: https://reference.humanapi.co/docs/overview
+  baseURL: https://admin.humanapi.co
+  tags:
+  - reports
+  properties:
+  - type: OpenAPI
+    url: openapi/human-api-reports-api-openapi.yml
+  - type: Documentation
+    url: https://reference.humanapi.co/docs/overview
+  - type: APIReference
+    url: https://reference.humanapi.co/reference/getordertypes
+- aid: human-api:human-api-resources-api
+  name: Human API Resources API
+  description: API endpoints to request different resources
+  humanURL: https://reference.humanapi.co/docs/overview
+  baseURL: https://admin.humanapi.co
+  tags:
+  - resources
+  properties:
+  - type: OpenAPI
+    url: openapi/human-api-resources-api-openapi.yml
+  - type: Documentation
+    url: https://reference.humanapi.co/docs/overview
+  - type: APIReference
+    url: https://reference.humanapi.co/reference/getordertypes
+- aid: human-api:human-api-subscriptions-api
+  name: Human API Subscriptions API
+  description: API endpoints to manage subscriptions
+  humanURL: https://reference.humanapi.co/docs/overview
+  baseURL: https://admin.humanapi.co
+  tags:
+  - subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/human-api-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://reference.humanapi.co/docs/overview
+  - type: APIReference
+    url: https://reference.humanapi.co/reference/getordertypes
+- aid: human-api:human-api-users-api
+  name: Human API Users API
+  description: API endpoints to manage users
+  humanURL: https://reference.humanapi.co/docs/overview
+  baseURL: https://admin.humanapi.co
+  tags:
+  - users
+  properties:
+  - type: OpenAPI
+    url: openapi/human-api-users-api-openapi.yml
+  - type: Documentation
+    url: https://reference.humanapi.co/docs/overview
+  - type: APIReference
+    url: https://reference.humanapi.co/reference/getordertypes
 common:
 - type: DomainSecurity
   url: security/human-api-domain-security.yml
