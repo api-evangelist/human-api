@@ -14,6 +14,18 @@ description: >-
   sources across roughly 270 million lives. The surface is a proprietary REST/JSON API
   secured with OAuth2-style client credentials and Bearer JWT tokens; it is not a HL7 FHIR
   or SMART-on-FHIR API. Access is gated behind a developer portal and partner agreement.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Healthcare
