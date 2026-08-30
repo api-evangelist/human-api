@@ -67,6 +67,8 @@ apis:
   humanURL: https://reference.humanapi.co/docs/overview
   baseURL: https://admin.humanapi.co
   tags:
+  - Admin
+  tags_raw:
   - admin
   properties:
   - type: OpenAPI
@@ -81,6 +83,8 @@ apis:
   humanURL: https://reference.humanapi.co/docs/overview
   baseURL: https://admin.humanapi.co
   tags:
+  - Connect
+  tags_raw:
   - connect
   properties:
   - type: OpenAPI
@@ -95,6 +99,8 @@ apis:
   humanURL: https://reference.humanapi.co/docs/overview
   baseURL: https://admin.humanapi.co
   tags:
+  - Order
+  tags_raw:
   - orders
   properties:
   - type: OpenAPI
@@ -109,6 +115,8 @@ apis:
   humanURL: https://reference.humanapi.co/docs/overview
   baseURL: https://admin.humanapi.co
   tags:
+  - Reports
+  tags_raw:
   - reports
   properties:
   - type: OpenAPI
@@ -123,6 +131,8 @@ apis:
   humanURL: https://reference.humanapi.co/docs/overview
   baseURL: https://admin.humanapi.co
   tags:
+  - Resources
+  tags_raw:
   - resources
   properties:
   - type: OpenAPI
@@ -137,6 +147,8 @@ apis:
   humanURL: https://reference.humanapi.co/docs/overview
   baseURL: https://admin.humanapi.co
   tags:
+  - Subscription
+  tags_raw:
   - subscriptions
   properties:
   - type: OpenAPI
@@ -151,6 +163,8 @@ apis:
   humanURL: https://reference.humanapi.co/docs/overview
   baseURL: https://admin.humanapi.co
   tags:
+  - User
+  tags_raw:
   - users
   properties:
   - type: OpenAPI
