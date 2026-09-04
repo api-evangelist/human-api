@@ -26,6 +26,22 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+accessModel:
+  pricing: unknown
+  onboarding: approval
+  trial: false
+  try_now: false
+  public: false
+  label: Requires approval
+  confidence: medium
+  source:
+  - plans
+  - authentication
+  - rate-limits
+  - security
+  - {url: 'https://humanapi.co/', status: 301, note: 'declared website redirects to https://risk.lexisnexis.com/products/health-intelligence-ehr — a different registrable domain (humanapi.co -> lexisnexis.com), possible rename or acquisition (probed 2026-09-03, roadmap#169)'}
+  generated: '2026-09-03'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Healthcare
@@ -208,8 +224,9 @@ common:
   url: components/human-api-components.yml
 - type: LLMsTxt
   url: llms/human-api-llms.txt
-- type: MCPServer
+- type: X-MCPServerCandidate
   url: mcp/human-api-mcp.yml
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
 - type: ToolCrosswalk
   url: mcp/human-api-tool-crosswalk.yml
 - type: Conventions
