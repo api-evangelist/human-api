@@ -190,6 +190,10 @@ apis:
   - type: APIReference
     url: https://reference.humanapi.co/reference/getordertypes
 common:
+- type: ParentCompany
+  url: https://apis.io/providers/lexisnexis-risk-solutions/
+- type: AgenticAccess
+  url: agentic-access/human-api-agentic-access.yml
 - type: DomainSecurity
   url: security/human-api-domain-security.yml
 - type: Authentication
