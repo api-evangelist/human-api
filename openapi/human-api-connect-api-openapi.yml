@@ -11,13 +11,13 @@ servers:
 - url: https://auth.humanapi.co
   description: Production server
 tags:
-- name: connect
+- name: Connect
   description: API endpoints to generate tokens for Connect App
 paths:
   /v1/connect/token:
     post:
       tags:
-      - connect
+      - Connect
       description: Public method for connect to generate tokens
       requestBody:
         content:
@@ -27,6 +27,10 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Create connect token
+      x-summary-source: derived
+      operationId: postV1ConnectToken
+      x-operation-id-source: derived
 components:
   schemas:
     connectTokenPayload:

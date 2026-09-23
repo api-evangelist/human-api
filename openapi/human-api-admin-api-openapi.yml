@@ -11,13 +11,13 @@ servers:
 - url: https://auth.humanapi.co
   description: Production server
 tags:
-- name: admin
+- name: Admin
   description: API endpoints to authorize a client app for the Admin API
 paths:
   /v1/admin/token:
     post:
       tags:
-      - admin
+      - Admin
       description: Admin API client type token
       requestBody:
         content:
@@ -27,6 +27,10 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Create admin token
+      x-summary-source: derived
+      operationId: postV1AdminToken
+      x-operation-id-source: derived
 components:
   schemas:
     tokenPayload:

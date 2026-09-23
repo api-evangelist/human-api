@@ -1,21 +1,21 @@
 {
   "provider": "human-api",
   "sources": [
-    "human-api-admin-consumer-link-openapi.json",
-    "human-api-admin-order-types-openapi.json",
-    "human-api-admin-report-by-id-openapi.json",
-    "human-api-admin-subscription-create-openapi.json",
-    "human-api-admin-subscription-delete-openapi.json",
-    "human-api-admin-subscription-details-openapi.json",
-    "human-api-admin-subscriptions-list-openapi.json",
-    "human-api-admin-user-actions-openapi.json",
-    "human-api-admin-user-create-openapi.json",
-    "human-api-admin-user-details-openapi.json",
-    "human-api-admin-user-providers-openapi.json",
-    "human-api-admin-user-reports-openapi.json",
-    "human-api-admin-users-list-openapi.json",
-    "human-api-auth-admin-token-openapi.json",
-    "human-api-auth-connect-token-openapi.json"
+    "_original/human-api-admin-consumer-link-openapi.json",
+    "_original/human-api-admin-order-types-openapi.json",
+    "_original/human-api-admin-report-by-id-openapi.json",
+    "_original/human-api-admin-subscription-create-openapi.json",
+    "_original/human-api-admin-subscription-delete-openapi.json",
+    "_original/human-api-admin-subscription-details-openapi.json",
+    "_original/human-api-admin-subscriptions-list-openapi.json",
+    "_original/human-api-admin-user-actions-openapi.json",
+    "_original/human-api-admin-user-create-openapi.json",
+    "_original/human-api-admin-user-details-openapi.json",
+    "_original/human-api-admin-user-providers-openapi.json",
+    "_original/human-api-admin-user-reports-openapi.json",
+    "_original/human-api-admin-users-list-openapi.json",
+    "_original/human-api-auth-admin-token-openapi.json",
+    "_original/human-api-auth-connect-token-openapi.json"
   ],
   "outputs": [
     "human-api-resources-api-openapi.yml",
@@ -26,26 +26,11 @@
     "human-api-admin-api-openapi.yml",
     "human-api-connect-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/human-api-admin-consumer-link-openapi.json",
-    "archived openapi/human-api-admin-order-types-openapi.json",
-    "archived openapi/human-api-admin-report-by-id-openapi.json",
-    "archived openapi/human-api-admin-subscription-create-openapi.json",
-    "archived openapi/human-api-admin-subscription-delete-openapi.json",
-    "archived openapi/human-api-admin-subscription-details-openapi.json",
-    "archived openapi/human-api-admin-subscriptions-list-openapi.json",
-    "archived openapi/human-api-admin-user-actions-openapi.json",
-    "archived openapi/human-api-admin-user-create-openapi.json",
-    "archived openapi/human-api-admin-user-details-openapi.json",
-    "archived openapi/human-api-admin-user-providers-openapi.json",
-    "archived openapi/human-api-admin-user-reports-openapi.json",
-    "archived openapi/human-api-admin-users-list-openapi.json",
-    "archived openapi/human-api-auth-admin-token-openapi.json",
-    "archived openapi/human-api-auth-connect-token-openapi.json"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (15 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "human-api-admin-consumer-link-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "human-api-admin-order-types-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "human-api-admin-report-by-id-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
@@ -64,7 +49,15 @@
     "tag 'reports' spans 2 source specs (human-api-admin-report-by-id-openapi.json, human-api-admin-user-reports-openapi.json): per-path servers applied",
     "tag 'subscriptions' spans 4 source specs (human-api-admin-subscription-create-openapi.json, human-api-admin-subscription-delete-openapi.json, human-api-admin-subscription-details-openapi.json, human-api-admin-subscriptions-list-openapi.json): per-path servers applied",
     "tag 'users' spans 5 source specs (human-api-admin-user-actions-openapi.json, human-api-admin-user-create-openapi.json, human-api-admin-user-details-openapi.json, human-api-admin-user-providers-openapi.json, human-api-admin-users-list-openapi.json): per-path servers applied",
-    "apis.yml register: written (+7 apis, 8 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "human-api-admin-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "human-api-connect-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "human-api-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "human-api-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "human-api-resources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "human-api-subscriptions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "human-api-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
