@@ -274,76 +274,7 @@ paths:
     - url: https://admin.humanapi.co
       description: Production server
 components:
-  responses:
-    unauthorized:
-      description: The token provided is invalid. It may have expired or may have been revoked.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 401
-            error: Unauthorized
-            message: Cannot authenticate you with this token
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    notFound:
-      description: The specified resource was not found (e.g. the id does not exist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 404
-            error: Not Found
-            message: Not Found
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    badRequest:
-      description: Cannot process input data
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 400
-            error: Bad Request
-            message: Bad Request
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    invalidEntity:
-      description: There is a semantic error with the content of the request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/errorInvalidInput'
-          example:
-            statusCode: 400
-            error: Bad Request
-            message: '"dateOfBirth" must be a valid date'
-            validation:
-              source: payload
-              keys:
-              - dateOfBirth
-            x-humanapi-request-id: fd05b02c-f527-4178-a907-42c2c3ac28c1
-    conflict:
-      description: There is a conflict with the specified resource (e.g. it may already exist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 409
-            error: Conflict
-            message: Unable to match the login of the new user to an existing user found for that user
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   schemas:
-    performActionForUser:
-      oneOf:
-      - $ref: '#/components/schemas/actionForUserHumanId'
-      - $ref: '#/components/schemas/actionForUserClientUserId'
-    actionForUsersActionAttribute:
-      type: string
-      enum:
-      - resync
-      - abort
     actionForUserClientUserId:
       title: Action for user by clientUserId
       type: object
@@ -352,17 +283,6 @@ components:
       - clientUserId
       properties:
         clientUserId:
-          type: string
-        action:
-          $ref: '#/components/schemas/actionForUsersActionAttribute'
-    actionForUserHumanId:
-      title: Action for user by humanId
-      type: object
-      required:
-      - action
-      - humanId
-      properties:
-        humanId:
           type: string
         action:
           $ref: '#/components/schemas/actionForUsersActionAttribute'
@@ -383,6 +303,45 @@ components:
           type: string
         x-humanapi-request-id:
           type: string
+    performActionForUser:
+      oneOf:
+      - $ref: '#/components/schemas/actionForUserHumanId'
+      - $ref: '#/components/schemas/actionForUserClientUserId'
+    actionForUsersActionAttribute:
+      type: string
+      enum:
+      - resync
+      - abort
+    actionForUserHumanId:
+      title: Action for user by humanId
+      type: object
+      required:
+      - action
+      - humanId
+      properties:
+        humanId:
+          type: string
+        action:
+          $ref: '#/components/schemas/actionForUsersActionAttribute'
+    address:
+      type: object
+      additionalProperties: false
+      required:
+      - street1
+      - city
+      - state
+      - zip
+      properties:
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: integer
     user:
       type: object
       additionalProperties: false
@@ -419,23 +378,6 @@ components:
             type: string
         inviteLink:
           type: string
-    attachment:
-      type: object
-      additionalProperties: false
-      required:
-      - type
-      - contentType
-      - encoding
-      - content
-      properties:
-        type:
-          type: string
-        contentType:
-          type: string
-        encoding:
-          type: string
-        content:
-          type: string
     provider:
       type: object
       additionalProperties: false
@@ -465,25 +407,55 @@ components:
             minLength: 0
           - type: number
           description: This field can be a string, number, or an empty string.
-    address:
+    attachment:
       type: object
       additionalProperties: false
       required:
-      - street1
-      - city
-      - state
-      - zip
+      - type
+      - contentType
+      - encoding
+      - content
       properties:
-        street1:
+        type:
           type: string
-        street2:
+        contentType:
           type: string
-        city:
+        encoding:
           type: string
-        state:
+        content:
           type: string
-        zip:
+    errorInvalidInput:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      - validation
+      - x-humanapi-request-id
+      properties:
+        statusCode:
           type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        validation:
+          type: object
+          required:
+          - source
+          - keys
+          properties:
+            source:
+              type: string
+              enum:
+              - payload
+            keys:
+              type: array
+              items:
+                type: string
+        x-humanapi-request-id:
+          type: string
     newUser:
       type: object
       additionalProperties: false
@@ -559,38 +531,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/attachment'
-    errorInvalidInput:
+    orderInfoWithDataAvailable:
       type: object
-      required:
-      - statusCode
-      - error
-      - message
-      - validation
-      - x-humanapi-request-id
       properties:
-        statusCode:
-          type: integer
-          format: int32
-        error:
+        orderId:
           type: string
-        message:
+        orderType:
           type: string
-        validation:
-          type: object
-          required:
-          - source
-          - keys
-          properties:
-            source:
-              type: string
-              enum:
-              - payload
-            keys:
-              type: array
-              items:
-                type: string
-        x-humanapi-request-id:
+        orderTypeAlias:
           type: string
+        orderStatus:
+          type: string
+        reportsAvailable:
+          type: boolean
+        dataAvailable:
+          type: boolean
+    orderInfo:
+      type: object
+      properties:
+        orderId:
+          type: string
+        orderType:
+          type: string
+        orderTypeAlias:
+          type: string
+        orderStatus:
+          type: string
+        reportsAvailable:
+          type: boolean
     t11mUser:
       type: object
       additionalProperties: false
@@ -625,34 +593,6 @@ components:
             anyOf:
             - $ref: '#/components/schemas/orderInfo'
             - $ref: '#/components/schemas/orderInfoWithDataAvailable'
-    orderInfo:
-      type: object
-      properties:
-        orderId:
-          type: string
-        orderType:
-          type: string
-        orderTypeAlias:
-          type: string
-        orderStatus:
-          type: string
-        reportsAvailable:
-          type: boolean
-    orderInfoWithDataAvailable:
-      type: object
-      properties:
-        orderId:
-          type: string
-        orderType:
-          type: string
-        orderTypeAlias:
-          type: string
-        orderStatus:
-          type: string
-        reportsAvailable:
-          type: boolean
-        dataAvailable:
-          type: boolean
     providersResponse:
       type: array
       items:
@@ -662,20 +602,67 @@ components:
             type: string
           name:
             type: string
+  responses:
+    badRequest:
+      description: Cannot process input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 400
+            error: Bad Request
+            message: Bad Request
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    unauthorized:
+      description: The token provided is invalid. It may have expired or may have been revoked.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 401
+            error: Unauthorized
+            message: Cannot authenticate you with this token
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    notFound:
+      description: The specified resource was not found (e.g. the id does not exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 404
+            error: Not Found
+            message: Not Found
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    invalidEntity:
+      description: There is a semantic error with the content of the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorInvalidInput'
+          example:
+            statusCode: 400
+            error: Bad Request
+            message: '"dateOfBirth" must be a valid date'
+            validation:
+              source: payload
+              keys:
+              - dateOfBirth
+            x-humanapi-request-id: fd05b02c-f527-4178-a907-42c2c3ac28c1
+    conflict:
+      description: There is a conflict with the specified resource (e.g. it may already exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 409
+            error: Conflict
+            message: Unable to match the login of the new user to an existing user found for that user
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   examples:
-    nonT11mUser:
-      value:
-        firstName: Jane
-        lastName: Smith
-        dateOfBirth: '1968-02-13T00:00:00.000Z'
-        humanId: f0e4cfc59516be96512c3d98e48b5abf
-        clientUserEmail: jane@smith.com
-        clientUserId: jane_smith_humanapi_connect
-        createdAt: '2025-02-06T12:00:00.000Z'
-        updatedAt: '2025-02-06T12:00:00.000Z'
-        status: Invited
-        suggestedSources:
-        - Starfleet Medical
     t11mUserWithDataAvailable:
       value:
         firstName: Jane
@@ -694,6 +681,19 @@ components:
           orderStatus: Completed
           reportsAvailable: true
           dataAvailable: true
+    nonT11mUser:
+      value:
+        firstName: Jane
+        lastName: Smith
+        dateOfBirth: '1968-02-13T00:00:00.000Z'
+        humanId: f0e4cfc59516be96512c3d98e48b5abf
+        clientUserEmail: jane@smith.com
+        clientUserId: jane_smith_humanapi_connect
+        createdAt: '2025-02-06T12:00:00.000Z'
+        updatedAt: '2025-02-06T12:00:00.000Z'
+        status: Invited
+        suggestedSources:
+        - Starfleet Medical
     t11mUser:
       value:
         firstName: Jane

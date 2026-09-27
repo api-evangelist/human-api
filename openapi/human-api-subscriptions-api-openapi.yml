@@ -126,41 +126,24 @@ paths:
     - url: https://admin.humanapi.co
       description: Production server
 components:
-  responses:
-    unauthorized:
-      description: The token provided is invalid. It may have expired or may have been revoked.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 401
-            error: Unauthorized
-            message: Cannot authenticate you with this token
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    conflict:
-      description: There is a conflict with the specified resource (e.g. it may already exist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 409
-            error: Conflict
-            message: Unable to match the login of the new user to an existing user found for that user
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    notFound:
-      description: The specified resource was not found (e.g. the id does not exist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 404
-            error: Not Found
-            message: Not Found
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   schemas:
+    error:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      - x-humanapi-request-id
+      properties:
+        code:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        x-humanapi-request-id:
+          type: string
     subscription:
       type: object
       required:
@@ -180,23 +163,40 @@ components:
           type: string
         subscriberLastName:
           type: string
-    error:
-      type: object
-      required:
-      - statusCode
-      - error
-      - message
-      - x-humanapi-request-id
-      properties:
-        code:
-          type: integer
-          format: int32
-        error:
-          type: string
-        message:
-          type: string
-        x-humanapi-request-id:
-          type: string
+  responses:
+    unauthorized:
+      description: The token provided is invalid. It may have expired or may have been revoked.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 401
+            error: Unauthorized
+            message: Cannot authenticate you with this token
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    notFound:
+      description: The specified resource was not found (e.g. the id does not exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 404
+            error: Not Found
+            message: Not Found
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    conflict:
+      description: There is a conflict with the specified resource (e.g. it may already exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 409
+            error: Conflict
+            message: Unable to match the login of the new user to an existing user found for that user
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   parameters:
     subscriptionIdPath:
       name: subscriptionId
@@ -205,36 +205,18 @@ components:
       required: true
       schema:
         type: string
-    limit:
-      name: limit
+    clientUserId:
+      name: clientUserId
       in: query
-      description: The max number of records to return in one query
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 50
-    role:
-      name: role
-      in: query
-      description: The role that the subscription is bound to.
+      description: The clientUserId of user.
       required: true
       schema:
         type: string
-        enum:
-        - producer
     subscriberEmail:
       name: subscriberEmail
       in: query
       description: The email that the subscription is bound to
       required: true
-      schema:
-        type: string
-    query:
-      name: query
-      in: query
-      description: The search string for pagination
-      required: false
       schema:
         type: string
     offset:
@@ -246,13 +228,15 @@ components:
         type: integer
         format: int32
         default: 0
-    clientUserId:
-      name: clientUserId
+    role:
+      name: role
       in: query
-      description: The clientUserId of user.
+      description: The role that the subscription is bound to.
       required: true
       schema:
         type: string
+        enum:
+        - producer
     sort:
       name: sort
       in: query
@@ -260,6 +244,22 @@ components:
       required: false
       schema:
         type: string
+    query:
+      name: query
+      in: query
+      description: The search string for pagination
+      required: false
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: The max number of records to return in one query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 50
   securitySchemes:
     bearerAuth:
       type: http

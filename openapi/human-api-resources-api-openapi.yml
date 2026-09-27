@@ -51,6 +51,38 @@ paths:
       summary: Get tasks liist link
       x-summary-source: derived
 components:
+  schemas:
+    error:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      - x-humanapi-request-id
+      properties:
+        code:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        x-humanapi-request-id:
+          type: string
+    link:
+      type: object
+      properties:
+        consumerLink:
+          type: string
+        clientId:
+          type: string
+    userHumanIdOrClientUserId:
+      type: object
+      properties:
+        clientUserId:
+          type: string
+        humanId:
+          type: string
   responses:
     unauthorized:
       description: The token provided is invalid. It may have expired or may have been revoked.
@@ -74,38 +106,6 @@ components:
             error: Not Found
             message: Not Found
             x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-  schemas:
-    link:
-      type: object
-      properties:
-        consumerLink:
-          type: string
-        clientId:
-          type: string
-    userHumanIdOrClientUserId:
-      type: object
-      properties:
-        clientUserId:
-          type: string
-        humanId:
-          type: string
-    error:
-      type: object
-      required:
-      - statusCode
-      - error
-      - message
-      - x-humanapi-request-id
-      properties:
-        code:
-          type: integer
-          format: int32
-        error:
-          type: string
-        message:
-          type: string
-        x-humanapi-request-id:
-          type: string
   securitySchemes:
     bearerAuth:
       type: http

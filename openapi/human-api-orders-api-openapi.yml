@@ -50,6 +50,18 @@ paths:
       summary: Get order types
       x-summary-source: derived
 components:
+  responses:
+    serverError:
+      description: There was an internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 500
+            error: Internal Server Error
+            message: Internal Server Error
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   schemas:
     error:
       type: object
@@ -68,18 +80,6 @@ components:
           type: string
         x-humanapi-request-id:
           type: string
-  responses:
-    serverError:
-      description: There was an internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 500
-            error: Internal Server Error
-            message: Internal Server Error
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   securitySchemes:
     bearerAuth:
       type: http
