@@ -134,6 +134,12 @@ components:
           type: string
         x-humanapi-request-id:
           type: string
+    userReports:
+      type: object
+      additionalProperties: false
+      oneOf:
+      - $ref: '#/components/schemas/individualReportGroup'
+      - $ref: '#/components/schemas/combinedReportGroup'
     individualReportGroup:
       type: object
       properties:
@@ -143,27 +149,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/individualReportInfo'
-    userReports:
-      type: object
-      additionalProperties: false
-      oneOf:
-      - $ref: '#/components/schemas/individualReportGroup'
-      - $ref: '#/components/schemas/combinedReportGroup'
-    combinedReportGroup:
+    individualReportInfo:
       type: object
       properties:
-        name:
+        fileExtension:
           type: string
-          enum:
-          - combined
-        baseReportNames:
+        id:
+          type: string
+        uri:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        createdByOrderId:
+          type:
+          - string
+          - 'null'
+        orderIds:
           type: array
           items:
             type: string
-        reports:
+        providerIds:
           type: array
           items:
-            $ref: '#/components/schemas/combinedReportInfo'
+            type: string
+        clientProviderIds:
+          type: array
+          items:
+            type: string
     combinedReportInfo:
       type: object
       properties:
@@ -196,49 +209,21 @@ components:
           type: string
           enum:
           - user_id
-    individualReportInfo:
+    combinedReportGroup:
       type: object
       properties:
-        fileExtension:
+        name:
           type: string
-        id:
-          type: string
-        uri:
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        createdByOrderId:
-          type:
-          - string
-          - 'null'
-        orderIds:
+          enum:
+          - combined
+        baseReportNames:
           type: array
           items:
             type: string
-        providerIds:
+        reports:
           type: array
           items:
-            type: string
-        clientProviderIds:
-          type: array
-          items:
-            type: string
-  parameters:
-    clientUserIdQueryOptional:
-      name: clientUserId
-      in: query
-      description: The clientUserId that the subscription is listening to
-      required: false
-      schema:
-        type: string
-    humanIdQueryOptional:
-      name: humanId
-      in: query
-      description: The humanId of the user
-      required: false
-      schema:
-        type: string
+            $ref: '#/components/schemas/combinedReportInfo'
   examples:
     userReports:
       value:
@@ -254,6 +239,21 @@ components:
           id: '0002'
           uri: <some-uri>
           createdAt: '2022-08-11T17:23:22.095Z'
+  parameters:
+    humanIdQueryOptional:
+      name: humanId
+      in: query
+      description: The humanId of the user
+      required: false
+      schema:
+        type: string
+    clientUserIdQueryOptional:
+      name: clientUserId
+      in: query
+      description: The clientUserId that the subscription is listening to
+      required: false
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

@@ -275,17 +275,6 @@ paths:
       description: Production server
 components:
   schemas:
-    actionForUserClientUserId:
-      title: Action for user by clientUserId
-      type: object
-      required:
-      - action
-      - clientUserId
-      properties:
-        clientUserId:
-          type: string
-        action:
-          $ref: '#/components/schemas/actionForUsersActionAttribute'
     error:
       type: object
       required:
@@ -303,15 +292,6 @@ components:
           type: string
         x-humanapi-request-id:
           type: string
-    performActionForUser:
-      oneOf:
-      - $ref: '#/components/schemas/actionForUserHumanId'
-      - $ref: '#/components/schemas/actionForUserClientUserId'
-    actionForUsersActionAttribute:
-      type: string
-      enum:
-      - resync
-      - abort
     actionForUserHumanId:
       title: Action for user by humanId
       type: object
@@ -323,139 +303,26 @@ components:
           type: string
         action:
           $ref: '#/components/schemas/actionForUsersActionAttribute'
-    address:
-      type: object
-      additionalProperties: false
-      required:
-      - street1
-      - city
-      - state
-      - zip
-      properties:
-        street1:
-          type: string
-        street2:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        zip:
-          type: integer
-    user:
-      type: object
-      additionalProperties: false
-      required:
-      - humanId
-      - clientUserEmail
-      - createdAt
-      - updatedAt
-      - status
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
-        dateOfBirth:
-          type: string
-          format: date-time
-          example: '1968-02-13T00:00:00.000Z'
-        humanId:
-          type: string
-        clientUserEmail:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        status:
-          type: string
-        suggestedSources:
-          type: array
-          items:
-            type: string
-        inviteLink:
-          type: string
-    provider:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - address
-      properties:
-        name:
-          type: string
-        organizationName:
-          type: string
-        clientProviderId:
-          type: string
-        address:
-          $ref: '#/components/schemas/address'
-        phone:
-          type: string
-          pattern: ^(([()\- .]{0,2}\d){10})[()\- .]{0,2}$
-        fax:
-          type: string
-          pattern: ^(([()\- .]{0,2}\d){10})[()\- .]{0,2}$
-        mrn:
-          type: string
-        npi:
-          oneOf:
-          - type: string
-            minLength: 0
-          - type: number
-          description: This field can be a string, number, or an empty string.
-    attachment:
-      type: object
-      additionalProperties: false
-      required:
-      - type
-      - contentType
-      - encoding
-      - content
-      properties:
-        type:
-          type: string
-        contentType:
-          type: string
-        encoding:
-          type: string
-        content:
-          type: string
-    errorInvalidInput:
+    actionForUsersActionAttribute:
+      type: string
+      enum:
+      - resync
+      - abort
+    performActionForUser:
+      oneOf:
+      - $ref: '#/components/schemas/actionForUserHumanId'
+      - $ref: '#/components/schemas/actionForUserClientUserId'
+    actionForUserClientUserId:
+      title: Action for user by clientUserId
       type: object
       required:
-      - statusCode
-      - error
-      - message
-      - validation
-      - x-humanapi-request-id
+      - action
+      - clientUserId
       properties:
-        statusCode:
-          type: integer
-          format: int32
-        error:
+        clientUserId:
           type: string
-        message:
-          type: string
-        validation:
-          type: object
-          required:
-          - source
-          - keys
-          properties:
-            source:
-              type: string
-              enum:
-              - payload
-            keys:
-              type: array
-              items:
-                type: string
-        x-humanapi-request-id:
-          type: string
+        action:
+          $ref: '#/components/schemas/actionForUsersActionAttribute'
     newUser:
       type: object
       additionalProperties: false
@@ -531,6 +398,139 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/attachment'
+    provider:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - address
+      properties:
+        name:
+          type: string
+        organizationName:
+          type: string
+        clientProviderId:
+          type: string
+        address:
+          $ref: '#/components/schemas/address'
+        phone:
+          type: string
+          pattern: ^(([()\- .]{0,2}\d){10})[()\- .]{0,2}$
+        fax:
+          type: string
+          pattern: ^(([()\- .]{0,2}\d){10})[()\- .]{0,2}$
+        mrn:
+          type: string
+        npi:
+          oneOf:
+          - type: string
+            minLength: 0
+          - type: number
+          description: This field can be a string, number, or an empty string.
+    address:
+      type: object
+      additionalProperties: false
+      required:
+      - street1
+      - city
+      - state
+      - zip
+      properties:
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: integer
+    attachment:
+      type: object
+      additionalProperties: false
+      required:
+      - type
+      - contentType
+      - encoding
+      - content
+      properties:
+        type:
+          type: string
+        contentType:
+          type: string
+        encoding:
+          type: string
+        content:
+          type: string
+    errorInvalidInput:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      - validation
+      - x-humanapi-request-id
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        validation:
+          type: object
+          required:
+          - source
+          - keys
+          properties:
+            source:
+              type: string
+              enum:
+              - payload
+            keys:
+              type: array
+              items:
+                type: string
+        x-humanapi-request-id:
+          type: string
+    user:
+      type: object
+      additionalProperties: false
+      required:
+      - humanId
+      - clientUserEmail
+      - createdAt
+      - updatedAt
+      - status
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+          example: '1968-02-13T00:00:00.000Z'
+        humanId:
+          type: string
+        clientUserEmail:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+        suggestedSources:
+          type: array
+          items:
+            type: string
+        inviteLink:
+          type: string
     orderInfoWithDataAvailable:
       type: object
       properties:
@@ -614,6 +614,17 @@ components:
             error: Bad Request
             message: Bad Request
             x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    notFound:
+      description: The specified resource was not found (e.g. the id does not exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 404
+            error: Not Found
+            message: Not Found
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
     unauthorized:
       description: The token provided is invalid. It may have expired or may have been revoked.
       content:
@@ -625,16 +636,16 @@ components:
             error: Unauthorized
             message: Cannot authenticate you with this token
             x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    notFound:
-      description: The specified resource was not found (e.g. the id does not exist)
+    conflict:
+      description: There is a conflict with the specified resource (e.g. it may already exist)
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/error'
           example:
-            code: 404
-            error: Not Found
-            message: Not Found
+            code: 409
+            error: Conflict
+            message: Unable to match the login of the new user to an existing user found for that user
             x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
     invalidEntity:
       description: There is a semantic error with the content of the request
@@ -651,17 +662,6 @@ components:
               keys:
               - dateOfBirth
             x-humanapi-request-id: fd05b02c-f527-4178-a907-42c2c3ac28c1
-    conflict:
-      description: There is a conflict with the specified resource (e.g. it may already exist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 409
-            error: Conflict
-            message: Unable to match the login of the new user to an existing user found for that user
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   examples:
     t11mUserWithDataAvailable:
       value:
@@ -719,17 +719,17 @@ components:
       required: true
       schema:
         type: string
-    clientUserIdQueryOptional:
-      name: clientUserId
-      in: query
-      description: The clientUserId that the subscription is listening to
-      required: false
-      schema:
-        type: string
     humanIdQueryOptional:
       name: humanId
       in: query
       description: The humanId of the user
+      required: false
+      schema:
+        type: string
+    clientUserIdQueryOptional:
+      name: clientUserId
+      in: query
+      description: The clientUserId that the subscription is listening to
       required: false
       schema:
         type: string
