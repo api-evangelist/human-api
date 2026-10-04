@@ -93,29 +93,6 @@ paths:
     - url: https://admin.humanapi.co
       description: Production server
 components:
-  responses:
-    notFound:
-      description: The specified resource was not found (e.g. the id does not exist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 404
-            error: Not Found
-            message: Not Found
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    unauthorized:
-      description: The token provided is invalid. It may have expired or may have been revoked.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 401
-            error: Unauthorized
-            message: Cannot authenticate you with this token
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   schemas:
     error:
       type: object
@@ -134,21 +111,6 @@ components:
           type: string
         x-humanapi-request-id:
           type: string
-    userReports:
-      type: object
-      additionalProperties: false
-      oneOf:
-      - $ref: '#/components/schemas/individualReportGroup'
-      - $ref: '#/components/schemas/combinedReportGroup'
-    individualReportGroup:
-      type: object
-      properties:
-        name:
-          type: string
-        reports:
-          type: array
-          items:
-            $ref: '#/components/schemas/individualReportInfo'
     individualReportInfo:
       type: object
       properties:
@@ -177,6 +139,21 @@ components:
           type: array
           items:
             type: string
+    userReports:
+      type: object
+      additionalProperties: false
+      oneOf:
+      - $ref: '#/components/schemas/individualReportGroup'
+      - $ref: '#/components/schemas/combinedReportGroup'
+    individualReportGroup:
+      type: object
+      properties:
+        name:
+          type: string
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/individualReportInfo'
     combinedReportInfo:
       type: object
       properties:
@@ -224,21 +201,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/combinedReportInfo'
-  examples:
-    userReports:
-      value:
-      - name: apidata
-        reports:
-        - fileExtension: json
-          id: '0001'
-          uri: <some-uri>
-          createdAt: '2022-08-11T17:23:22.095Z'
-      - name: highlights
-        reports:
-        - fileExtension: pdf
-          id: '0002'
-          uri: <some-uri>
-          createdAt: '2022-08-11T17:23:22.095Z'
+  responses:
+    notFound:
+      description: The specified resource was not found (e.g. the id does not exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 404
+            error: Not Found
+            message: Not Found
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    unauthorized:
+      description: The token provided is invalid. It may have expired or may have been revoked.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 401
+            error: Unauthorized
+            message: Cannot authenticate you with this token
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   parameters:
     humanIdQueryOptional:
       name: humanId
@@ -254,6 +239,21 @@ components:
       required: false
       schema:
         type: string
+  examples:
+    userReports:
+      value:
+      - name: apidata
+        reports:
+        - fileExtension: json
+          id: '0001'
+          uri: <some-uri>
+          createdAt: '2022-08-11T17:23:22.095Z'
+      - name: highlights
+        reports:
+        - fileExtension: pdf
+          id: '0002'
+          uri: <some-uri>
+          createdAt: '2022-08-11T17:23:22.095Z'
   securitySchemes:
     bearerAuth:
       type: http

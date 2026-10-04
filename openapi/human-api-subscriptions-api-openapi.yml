@@ -126,58 +126,7 @@ paths:
     - url: https://admin.humanapi.co
       description: Production server
 components:
-  responses:
-    conflict:
-      description: There is a conflict with the specified resource (e.g. it may already exist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 409
-            error: Conflict
-            message: Unable to match the login of the new user to an existing user found for that user
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    notFound:
-      description: The specified resource was not found (e.g. the id does not exist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 404
-            error: Not Found
-            message: Not Found
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    unauthorized:
-      description: The token provided is invalid. It may have expired or may have been revoked.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 401
-            error: Unauthorized
-            message: Cannot authenticate you with this token
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   schemas:
-    error:
-      type: object
-      required:
-      - statusCode
-      - error
-      - message
-      - x-humanapi-request-id
-      properties:
-        code:
-          type: integer
-          format: int32
-        error:
-          type: string
-        message:
-          type: string
-        x-humanapi-request-id:
-          type: string
     subscription:
       type: object
       required:
@@ -197,12 +146,86 @@ components:
           type: string
         subscriberLastName:
           type: string
+    error:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      - x-humanapi-request-id
+      properties:
+        code:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        x-humanapi-request-id:
+          type: string
+  responses:
+    unauthorized:
+      description: The token provided is invalid. It may have expired or may have been revoked.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 401
+            error: Unauthorized
+            message: Cannot authenticate you with this token
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    notFound:
+      description: The specified resource was not found (e.g. the id does not exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 404
+            error: Not Found
+            message: Not Found
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    conflict:
+      description: There is a conflict with the specified resource (e.g. it may already exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 409
+            error: Conflict
+            message: Unable to match the login of the new user to an existing user found for that user
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   parameters:
     subscriptionIdPath:
       name: subscriptionId
       in: path
       description: The subscriptionId of the user
       required: true
+      schema:
+        type: string
+    offset:
+      name: offset
+      in: query
+      description: The index of the first record to return
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 0
+    sort:
+      name: sort
+      in: query
+      description: The sort option for pagination
+      required: false
+      schema:
+        type: string
+    query:
+      name: query
+      in: query
+      description: The search string for pagination
+      required: false
       schema:
         type: string
     clientUserId:
@@ -219,22 +242,6 @@ components:
       required: true
       schema:
         type: string
-    offset:
-      name: offset
-      in: query
-      description: The index of the first record to return
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 0
-    query:
-      name: query
-      in: query
-      description: The search string for pagination
-      required: false
-      schema:
-        type: string
     limit:
       name: limit
       in: query
@@ -244,13 +251,6 @@ components:
         type: integer
         format: int32
         default: 50
-    sort:
-      name: sort
-      in: query
-      description: The sort option for pagination
-      required: false
-      schema:
-        type: string
     role:
       name: role
       in: query
