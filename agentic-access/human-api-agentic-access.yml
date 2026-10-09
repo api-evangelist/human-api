@@ -1,19 +1,53 @@
-generated: '2026-07-19'
+generated: '2026-09-23'
 method: generated
-source: openapi/humanapi-admin-openapi.yml, openapi/humanapi-auth-openapi.yml
+source: openapi/human-api-admin-api-openapi.yml, openapi/human-api-connect-api-openapi.yml,
+  openapi/human-api-orders-api-openapi.yml, openapi/human-api-reports-api-openapi.yml, openapi/human-api-resources-api-openapi.yml,
+  openapi/human-api-subscriptions-api-openapi.yml, openapi/human-api-users-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 15
   by_action_class:
-    connected: 8
-    acting: 7
+    acting: 6
+    connected: 9
   by_consequence:
-    read: 8
-    write: 7
+    write: 6
+    read: 9
   human_in_the_loop_required: 0
 operations:
+- path: /v1/admin/token
+  method: post
+  operationId: postV1AdminToken
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/connect/token
+  method: post
+  operationId: postV1ConnectToken
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /api/v1/order-types
   method: get
   operationId: getOrderTypes
@@ -24,9 +58,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/v1/users
+- path: /api/v1/user/reports/{reportId}
   method: get
-  operationId: getUsersList
+  operationId: getReportById
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -34,61 +68,19 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/v1/users
+- path: /api/v1/user/reports
+  method: get
+  operationId: getUserReports
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/resources/consumer-link
   method: post
-  operationId: createUser
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v1/users/actions
-  method: post
-  operationId: performActionForUser
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v1/users/{humanId}
-  method: get
-  operationId: getUserDetails
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v1/users/providers
-  method: get
-  operationId: userProviders
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v1/subscriptions
-  method: get
-  operationId: getUsersSubscriptions
+  operationId: getTasksLiistLink
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -112,9 +104,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/subscriptions/{subscriptionId}
+- path: /api/v1/subscriptions
   method: get
-  operationId: getSubscriptionDetails
+  operationId: getUsersSubscriptions
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -138,9 +130,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/user/reports
+- path: /api/v1/subscriptions/{subscriptionId}
   method: get
-  operationId: getUserReports
+  operationId: getSubscriptionDetails
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -148,9 +140,41 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/v1/user/reports/{reportId}
+- path: /api/v1/users/actions
+  method: post
+  operationId: performActionForUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/users
+  method: post
+  operationId: createUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/users
   method: get
-  operationId: getReportById
+  operationId: getUsersList
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -158,49 +182,23 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/v1/resources/consumer-link
-  method: post
-  operationId: getTasksLiistLink
+- path: /api/v1/users/{humanId}
+  method: get
+  operationId: getUserDetails
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/admin/token
-  method: post
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/users/providers
+  method: get
+  operationId: userProviders
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/connect/token
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
