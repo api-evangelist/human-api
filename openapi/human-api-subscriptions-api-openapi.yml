@@ -126,6 +126,40 @@ paths:
     - url: https://admin.humanapi.co
       description: Production server
 components:
+  responses:
+    conflict:
+      description: There is a conflict with the specified resource (e.g. it may already exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 409
+            error: Conflict
+            message: Unable to match the login of the new user to an existing user found for that user
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    unauthorized:
+      description: The token provided is invalid. It may have expired or may have been revoked.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 401
+            error: Unauthorized
+            message: Cannot authenticate you with this token
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    notFound:
+      description: The specified resource was not found (e.g. the id does not exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 404
+            error: Not Found
+            message: Not Found
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   schemas:
     subscription:
       type: object
@@ -163,40 +197,6 @@ components:
           type: string
         x-humanapi-request-id:
           type: string
-  responses:
-    unauthorized:
-      description: The token provided is invalid. It may have expired or may have been revoked.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 401
-            error: Unauthorized
-            message: Cannot authenticate you with this token
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    notFound:
-      description: The specified resource was not found (e.g. the id does not exist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 404
-            error: Not Found
-            message: Not Found
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    conflict:
-      description: There is a conflict with the specified resource (e.g. it may already exist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 409
-            error: Conflict
-            message: Unable to match the login of the new user to an existing user found for that user
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   parameters:
     subscriptionIdPath:
       name: subscriptionId
@@ -205,15 +205,22 @@ components:
       required: true
       schema:
         type: string
-    offset:
-      name: offset
+    subscriberEmail:
+      name: subscriberEmail
       in: query
-      description: The index of the first record to return
-      required: false
+      description: The email that the subscription is bound to
+      required: true
       schema:
-        type: integer
-        format: int32
-        default: 0
+        type: string
+    role:
+      name: role
+      in: query
+      description: The role that the subscription is bound to.
+      required: true
+      schema:
+        type: string
+        enum:
+        - producer
     sort:
       name: sort
       in: query
@@ -228,17 +235,19 @@ components:
       required: false
       schema:
         type: string
+    offset:
+      name: offset
+      in: query
+      description: The index of the first record to return
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 0
     clientUserId:
       name: clientUserId
       in: query
       description: The clientUserId of user.
-      required: true
-      schema:
-        type: string
-    subscriberEmail:
-      name: subscriberEmail
-      in: query
-      description: The email that the subscription is bound to
       required: true
       schema:
         type: string
@@ -251,15 +260,6 @@ components:
         type: integer
         format: int32
         default: 50
-    role:
-      name: role
-      in: query
-      description: The role that the subscription is bound to.
-      required: true
-      schema:
-        type: string
-        enum:
-        - producer
   securitySchemes:
     bearerAuth:
       type: http
