@@ -1,4 +1,4 @@
-# Human API (human-api)
+# Human API
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,84 +64,169 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Human API is a United States health data platform, founded in 2013 and now part of LexisNexis Risk Solutions, that aggregates, normalizes, and delivers digital and clinical health data from providers, hospitals, labs, pharmacies, wearables, and apps through a single API. Its consumer-mediated Data API returns normalized wellness and medical records via user access tokens (Human Connect single sign-on), while its Health Intelligence Platform (HIP) Admin API lets enterprises order electronic health record (EHR) retrievals, manage users and subscriptions, and receive condensed clinical summary reports — primarily to accelerate life insurance underwriting across 30,000+ data sources. The surface is a proprietary REST/JSON API secured with OAuth2-style client credentials and Bearer JWT tokens; it is not a HL7 FHIR or SMART-on-FHIR API, and access is gated behind a developer portal and partner agreement.
+Human API is a United States health data platform, founded in 2013 and now part of LexisNexis Risk Solutions, that aggregates, normalizes, and delivers digital and clinical health data from providers, hospitals, labs, pharmacies, wearables, and apps through a single API. Its consumer-mediated Data API returns normalized wellness and medical records via user access tokens (Human Connect single sign-on), while its Health Intelligence Platform (HIP) Admin API lets enterprises order electronic health record (EHR) retrievals, manage users and subscriptions, and receive condensed clinical summary reports - primarily to accelerate life insurance underwriting by reaching 30,000+ data sources across roughly 270 million lives. The surface is a proprietary REST/JSON API secured with OAuth2-style client credentials and Bearer JWT tokens; it is not a HL7 FHIR or SMART-on-FHIR API. Access is gated behind a developer portal and partner agreement.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/human-api/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/human-api/refs/heads/main/apis.yml)
+**Areas:** Healthcare · United States · Health Data · Electronic Health Records · Interoperability · Remote Monitoring · Wearables · Life Insurance · Clinical Data · Health API
 
-## Tags
+## Human API on APIs.io
 
-- Healthcare
-- United States
-- Health Data
-- EHR
-- Interoperability
-- Remote Monitoring
-- Wearables
-- Life Insurance
-- Clinical Data
-- Health API
+Everything profiled for Human API is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/human-api/](https://apis.io/providers/human-api/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (8)
 
-- **Created:** 2026-07-24
-- **Modified:** 2026-07-24
+- [Human API Data API](https://apis.io/apis/human-api/human-api-data-api/) — The consumer-mediated Data API (legacy v2.1) for querying a user's normalized health data - wellness data from wearable devices and apps, and medical data…
+- [Human API Admin API](https://apis.io/apis/human-api/human-api-admin-api/) — API endpoints to authorize a client app for the Admin API
+- [Human API Connect API](https://apis.io/apis/human-api/human-api-connect-api/) — API endpoints to generate tokens for Connect App
+- [Human API Orders API](https://apis.io/apis/human-api/human-api-orders-api/) — API endpoints to get orders
+- [Human API Reports API](https://apis.io/apis/human-api/human-api-reports-api/) — API endpoints to manage user resports
+- [Human API Resources API](https://apis.io/apis/human-api/human-api-resources-api/) — API endpoints to request different resources
+- [Human API Subscriptions API](https://apis.io/apis/human-api/human-api-subscriptions-api/) — API endpoints to manage subscriptions
+- [Human API Users API](https://apis.io/apis/human-api/human-api-users-api/) — API endpoints to manage users
 
-## APIs
+### Published properties
 
-### Human API Admin API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-The Health Intelligence Platform (HIP) Admin API for creating and managing Human API users, submitting and managing EHR order types, managing subscriptions, and fetching delivered clinical summary reports and order resources. Secured with a Bearer JWT.
+#### AsyncAPI (1)
 
-- **Human URL:** [https://reference.humanapi.co/docs/overview](https://reference.humanapi.co/docs/overview)
-- **Base URL:** `https://admin.humanapi.co`
+Event-driven and webhook contracts.
 
-#### Properties
+- [Human API HIP Notifications](https://apis.io/asyncapis/human-api/human-api-notifications-asyncapi/)
 
-- [Documentation](https://reference.humanapi.co/docs/overview)
-- [API Reference](https://reference.humanapi.co/reference/getordertypes)
-- [OpenAPI](openapi/human-api-admin-order-types-openapi.json)
-- [OpenAPI](openapi/human-api-admin-users-list-openapi.json)
-- [OpenAPI](openapi/human-api-admin-user-reports-openapi.json)
+#### Event channels (2)
 
-### Human API Authentication API
+Individual events and webhooks the provider emits.
 
-The HAPI Auth Public API for facilitating token exchange with external authentication systems — `POST /v1/admin/token` (Admin API client-type token) and `POST /v1/connect/token` (public Connect token with optional extra scopes).
+- [aps/status-notes](https://apis.io/channels/human-api/aps-status-notes/)
+- [order/summary](https://apis.io/channels/human-api/order-summary/)
 
-- **Human URL:** [https://reference.humanapi.co/docs/overview](https://reference.humanapi.co/docs/overview)
-- **Base URL:** `https://auth.humanapi.co`
+#### MCP servers (1)
 
-#### Properties
+Model Context Protocol servers that expose the API to agents.
 
-- [Documentation](https://reference.humanapi.co/docs/overview)
-- [OpenAPI](openapi/human-api-auth-admin-token-openapi.json)
-- [OpenAPI](openapi/human-api-auth-connect-token-openapi.json)
+- [human-api](https://apis.io/servers/human-api/human-api/)
 
-### Human API Data API
+#### Agentic access (1)
 
-The consumer-mediated Data API (legacy v2.1) for querying a user's normalized health data — wellness data from wearable devices and apps, and medical data (records, labs, medications, encounters) from health providers, using the user's accessToken as a Bearer credential.
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- **Human URL:** [https://reference.humanapi.co/v2.1/docs/data-overview](https://reference.humanapi.co/v2.1/docs/data-overview)
-- **Base URL:** `https://api.humanapi.co/v1/human`
+- [Human Api Agentic Access](https://apis.io/agentic-access/human-api/human-api-agentic-access/)
 
-#### Properties
+#### Collections (5)
 
-- [Documentation](https://reference.humanapi.co/v2.1/docs/data-overview)
-- [API Reference](https://reference.humanapi.co/v2.1/docs/overview)
+Postman and Open Collection request collections.
 
-## Common Properties
+- [Admin API](https://apis.io/collections/human-api/open-human-api-admin-order-types/)
+- [Admin API](https://apis.io/collections/human-api/open-human-api-admin-user-reports/)
+- [Admin API](https://apis.io/collections/human-api/open-human-api-admin-users-list/)
+- [HAPI Auth Public](https://apis.io/collections/human-api/open-human-api-auth-admin-token/)
+- [HAPI Auth Public](https://apis.io/collections/human-api/open-human-api-auth-connect-token/)
+
+#### Overlays (15)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Human Api Admin Consumer Link Overlay](https://apis.io/overlays/human-api/human-api-admin-consumer-link-overlay/)
+- [Human Api Admin Order Types Overlay](https://apis.io/overlays/human-api/human-api-admin-order-types-overlay/)
+- [Human Api Admin Report By Id Overlay](https://apis.io/overlays/human-api/human-api-admin-report-by-id-overlay/)
+- [Human Api Admin Subscription Create Overlay](https://apis.io/overlays/human-api/human-api-admin-subscription-create-overlay/)
+- [Human Api Admin Subscription Delete Overlay](https://apis.io/overlays/human-api/human-api-admin-subscription-delete-overlay/)
+- [Human Api Admin Subscription Details Overlay](https://apis.io/overlays/human-api/human-api-admin-subscription-details-overlay/)
+- [Human Api Admin Subscriptions List Overlay](https://apis.io/overlays/human-api/human-api-admin-subscriptions-list-overlay/)
+- [Human Api Admin User Actions Overlay](https://apis.io/overlays/human-api/human-api-admin-user-actions-overlay/)
+- [Human Api Admin User Create Overlay](https://apis.io/overlays/human-api/human-api-admin-user-create-overlay/)
+- [Human Api Admin User Details Overlay](https://apis.io/overlays/human-api/human-api-admin-user-details-overlay/)
+- [Human Api Admin User Providers Overlay](https://apis.io/overlays/human-api/human-api-admin-user-providers-overlay/)
+- [Human Api Admin User Reports Overlay](https://apis.io/overlays/human-api/human-api-admin-user-reports-overlay/)
+- [Human Api Admin Users List Overlay](https://apis.io/overlays/human-api/human-api-admin-users-list-overlay/)
+- [Human Api Auth Admin Token Overlay](https://apis.io/overlays/human-api/human-api-auth-admin-token-overlay/)
+- [Human Api Auth Connect Token Overlay](https://apis.io/overlays/human-api/human-api-auth-connect-token-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Human Api Authentication](https://apis.io/security/human-api/human-api-authentication/)
+- [Human Api Domain Security](https://apis.io/security/human-api/human-api-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Human Api Plans Pricing](https://apis.io/plans/human-api/human-api-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Human Api Rate Limits](https://apis.io/rate-limits/human-api/human-api-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://humanapi.co/)
-- [Developer Portal](https://developer.humanapi.co/)
 - [Documentation](https://reference.humanapi.co/)
-- [API Reference](https://reference.humanapi.co/docs/overview)
-- [Getting Started](https://reference.humanapi.co/docs/integration-best-practices)
-- [GitHub Organization](https://github.com/humanapi)
-- [Status Page](https://status.humanapi.co/)
-- [Login](https://developer.humanapi.co/)
-- [Terms of Service](https://www.humanapi.co/developer-terms)
-- [Privacy Policy](https://humanapi.co/privacy-policy)
+- [Getting started](https://reference.humanapi.co/docs/integration-best-practices)
+- [API reference](https://reference.humanapi.co/docs/overview)
+- [Support](https://support.humanapi.co/hc/en-us)
+- [Compliance](https://reference.humanapi.co/page/epic-documentation)
+- [Terms of service](https://www.humanapi.co/developer-terms)
+- [Privacy policy](https://humanapi.co/privacy-policy)
+- [GitHub](https://github.com/humanapi)
+- [Status](https://status.humanapi.co/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 51.7** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 57.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 67.3 |
+| Access clarity | 38.2 |
+
+**Agent readiness 28.7** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 36.3** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/human-api/](https://apis.io/providers/human-api/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Human API: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/human-api/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
